@@ -1,0 +1,11 @@
+[On-Premise]
+user = ''
+password = ''
+port = ''
+
+[AWS]
+host = ''
+user = ''
+password = ''
+sid = ''
+port = ''

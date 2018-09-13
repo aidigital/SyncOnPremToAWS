@@ -1,0 +1,18 @@
+config/config.ini
+config/config_for_Dev.ini
+
+.idea/
+venv/
+
+#1.1 Do NOT ignore file pattern in any subdirectory
+!*/__pycache__
+#1.2 ...only ignore it in the current directory
+/__pycache__
+
+learn_coroutines.py
+learning_concurrent_futures.py
+concurent_futures.py
+_delete.py
+what_to_update_before05Sep.py
+
+had_to_install.txt

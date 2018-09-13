@@ -1,0 +1,16 @@
+certifi==2018.1.18
+chardet==3.0.4
+cx-Oracle==6.2.1
+idna==2.6
+mypy==0.600
+numpy==1.14.2
+pandas==0.22.0
+pyodbc==4.0.23
+python-dateutil==2.7.2
+pytz==2018.3
+requests==2.18.4
+six==1.11.0
+SQLAlchemy==1.2.6
+typed-ast==1.1.0
+typing==3.6.4
+urllib3==1.22
