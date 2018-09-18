@@ -12,13 +12,22 @@ from config import config
 i = -1
 
 class AWS_Connecter():
-    def __init__(self, host, user, password):
-        self.host = host
-        self.user = user
-        self.password = password
+    def __init__(self, environment, host=None, user=None, password=None):
+        self.environment = environment  # this should be passed as one of 2 values: 'Dev' / 'Prod'
 
-        self.port = config['AWS']['port']
-        self.sid = config['AWS']['sid']
+        # Dynamically determine the credentials based on environment
+        self.host = host if host != None else config['AWS-Dev']['host'] if self.environment == 'Dev' else config['AWS-Prod']['host'] if self.environment == 'Prod' else 'idiot'
+        self.user = user if user != None else config['AWS-Dev']['user'] if self.environment == 'Dev' else config['AWS-Prod']['user'] if self.environment == 'Prod' else 'idiot'
+        self.password = password if password != None else config['AWS-Dev']['password'] if self.environment == 'Dev' else config['AWS-Prod']['password'] if self.environment == 'Prod' else 'idiot'
+
+        self.port = config['AWS-Dev']['port'] if self.environment == 'Dev' else config['AWS-Prod']['port'] if self.environment == 'Prod' else 'idiot'
+        self.sid = config['AWS-Dev']['sid'] if self.environment == 'Dev' else config['AWS-Prod']['sid'] if self.environment == 'Prod' else 'idiot'
+
+        # the 2 functions MTA_GET_NEW_LOADID (which gives the LOAD_ID that we need to use) & MTA_SUBMIT_LOAD (which pushes SA to GD) are taken from here
+        self.SemarchyFunctions_host = config['SemarchyFunctions-Dev']['host'] if self.environment == 'Dev' else config['SemarchyFunctions-Prod']['host'] if self.environment == 'Prod' else 'idiot'
+        self.SemarchyFunctions_user = config['SemarchyFunctions-Dev']['user'] if self.environment == 'Dev' else config['SemarchyFunctions-Prod']['user'] if self.environment == 'Prod' else 'idiot'
+        self.SemarchyFunctions_password = config['SemarchyFunctions-Dev']['password'] if self.environment == 'Dev' else config['SemarchyFunctions-Prod']['password'] if self.environment == 'Prod' else 'idiot'
+
 
         self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
         connection_string = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.SID)
@@ -149,9 +158,9 @@ class AWS_Connecter():
         self.connection.commit()
 
     @classmethod  # https://stackoverflow.com/questions/12179271/meaning-of-classmethod-and-staticmethod-for-beginner
-    def instance_other_user(cls, host, user, password):
+    def instance_other_user(cls, environment, host, user, password):
         logger = logging.getLogger(__name__); logger.info('calling {}'.format(inspect.stack()[0][3]))
-        instance_other_user = cls(host, user, password)  # essentially each instance of AWS_Connecter() will create yet another AWS_Connecter() instance by using this approach
+        instance_other_user = cls(environment, host, user, password)  # essentially each instance of AWS_Connecter() will create yet another AWS_Connecter() instance by using this approach
         return instance_other_user
 
    # http://www.oracle.com/technetwork/articles/prez-stored-proc-084100.html
@@ -181,8 +190,8 @@ class AWS_Connecter():
         logger = logging.getLogger(__name__); logger.info('calling {}'.format(inspect.stack()[0][3]))
 
         # instance_new = self.instance_other_user(host='tvha-aws-semarchy-dev.csaymlyq76p1.eu-west-1.rds.amazonaws.com', user='SEMARCHY_REPOSITORY', password='SEMARCHY_REPOSITORY')
-        instance_new = self.instance_other_user(host=config['AWS']['host'], user='SEMARCHY_REPOSITORY', password='SEMARCHY_REPOSITORY_PROD')
-        auto_increment = self.run_oracle_function(instance=instance_new, fct_name="MTA_GET_NEW_LOADID", fct_params=['TVHA_MDM', 0, 0, 'Python','upload_data','adrian_iordache'])
+        instance_new = self.instance_other_user(environment=self.environment, host=self.SemarchyFunctions_host, user=self.SemarchyFunctions_user, password=self.SemarchyFunctions_password)
+        auto_increment = self.run_oracle_function(instance=instance_new, fct_name="MTA_GET_NEW_LOADID", fct_params=['TVHA_MDM', 0, 0, 'Python', 'upload_data', 'adrian_iordache'])
 
         # Previous logic for calculating: auto_increment
         # try:
@@ -277,7 +286,34 @@ if __name__ == "__main__":
     #print(AWS.fetch_to_pandas(sql_statement ='SELECT owner, table_name FROM all_tables'))
 
     # AWS = AWS_Connecter(host='tvha-aws-semarchy-dev.csaymlyq76p1.eu-west-1.rds.amazonaws.com', user='TVHA_MDM', password='TVHA_MDM')
-    AWS = AWS_Connecter(host=config['AWS']['host'], user='TVHA_MDM', password='TVHA_MDM_PROD')
+    AWS = AWS_Connecter(environment='Dev')
+    # AWS.execute_sql(sql_statement='DELETE FROM SA_RESIDENTS')
+    # AWS.execute_sql(sql_statement='DELETE FROM SA_RENT_GRP_REF')
+    # AWS.execute_sql(sql_statement='DELETE FROM SA_PERSON')
+    #
+    # AWS.execute_sql(sql_statement='DELETE FROM SA_PERSON_LOOKUP')
+    # AWS.execute_sql(sql_statement='DELETE FROM SA_CONTACT_PREFRENCES')
+    # AWS.execute_sql(sql_statement='DELETE FROM SA_COMMUNICATION')
+    #
+    # AWS.execute_sql(sql_statement='DELETE FROM SA_ECONOMIC_STATUS')
+    # AWS.execute_sql(sql_statement='DELETE FROM SA_VULNERABILTY_DETAILS')
+    #
+    # AWS.execute_sql(sql_statement='DELETE FROM GD_RESIDENTS')
+    # AWS.execute_sql(sql_statement='DELETE FROM GD_RENT_GRP_REF')
+    # AWS.execute_sql(sql_statement='DELETE FROM GD_PERSON')
+    #
+    # AWS.execute_sql(sql_statement='DELETE FROM GD_PERSON_LOOKUP')
+    # AWS.execute_sql(sql_statement='DELETE FROM GD_CONTACT_PREFRENCES')
+    # AWS.execute_sql(sql_statement='DELETE FROM GD_COMMUNICATION')
+    #
+    # AWS.execute_sql(sql_statement='DELETE FROM GD_ECONOMIC_STATUS')
+    # AWS.execute_sql(sql_statement='DELETE FROM GD_VULNERABILTY_DETAILS')
+
+
+
+
+
+    ###############
     # AWS.execute_sql(sql_statement="""CREATE TABLE INSERT_
     #                                  ( PROPERTY_CODE varchar2(50) NOT NULL,
     #                                    PROPERTY_NAME varchar2(50) NOT NULL

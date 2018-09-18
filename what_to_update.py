@@ -438,4 +438,78 @@ tables_to_update = [
                  'delete_last': False
                  },
 
+
+                 # 8 New Views (Customer Data Model) - 18-Sep-2018
+ {'oracle_table': 'SA_RESIDENTS',  # 15,636
+  'server': 'TVHA-UH-DB01',
+  'on_prem_database': 'uhlive',
+  'col_to_increment': 'B_LOADID',
+  'sql_statement': 'SELECT * FROM semarchy_residents',
+  'primary_key': 'RESIDENTS_ID',
+  'delete_last': False
+  },
+
+ {'oracle_table': 'SA_COMMUNICATION',  # 90,356
+  'server': 'TVHA-UH-DB01',
+  'on_prem_database': 'uhlive',
+  'col_to_increment': 'B_LOADID',
+  'sql_statement': 'SELECT * FROM semarchy_communication',
+  'primary_key': 'COMMUNICATION_ID',
+  'delete_last': False
+  },
+
+ {'oracle_table': 'SA_VULNERABILTY_DETAILS',  # 28,780
+  'server': 'TVHA-UH-DB01',
+  'on_prem_database': 'uhlive',
+  'col_to_increment': 'B_LOADID',
+  'sql_statement': 'SELECT * FROM semarchy_vulnerabiltyDetails',
+  'primary_key': 'VULNERABILTY_DETAILS_ID',
+  'delete_last': False
+  },
+
+ {'oracle_table': 'SA_ECONOMIC_STATUS',  # 28,780
+  'server': 'TVHA-UH-DB01',
+  'on_prem_database': 'uhlive',
+  'col_to_increment': 'B_LOADID',
+  'sql_statement': 'SELECT * FROM semarchy_economicStatus',
+  'primary_key': 'ECONOMIC_STATUS_ID',
+  'delete_last': False
+  },
+
+ {'oracle_table': 'SA_CONTACT_PREFRENCES',  # spelling fucking mistake # 28,780
+  'server': 'TVHA-UH-DB01',
+  'on_prem_database': 'uhlive',
+  'col_to_increment': 'B_LOADID',
+  'sql_statement': 'SELECT * FROM semarchy_contactPreferences',
+  'primary_key': 'CONTACT_PREFRENCES_ID',  # spelling fucking mistake
+  'delete_last': False
+  },
+
+ {'oracle_table': 'SA_RENT_GRP_REF',  # 9
+  'server': 'TVHA-UH-DB01',
+  'on_prem_database': 'uhlive',
+  'col_to_increment': 'B_LOADID',
+  'sql_statement': 'SELECT * FROM semarchy_rentGrp',
+  'primary_key': 'RENT_GRP_REF_ID',
+  'delete_last': False
+  },
+
+ {'oracle_table': 'SA_PERSON',  # 28,845
+  'server': 'TVHA-UH-DB01',
+  'on_prem_database': 'uhlive',
+  'col_to_increment': 'B_LOADID',
+  'sql_statement': 'SELECT * FROM semarchy_person',
+  'primary_key': 'PERSON_ID',
+  'delete_last': False
+  },
+
+ {'oracle_table': 'SA_PERSON_LOOKUP',  # 278
+  'server': 'TVHA-UH-DB01',
+  'on_prem_database': 'uhlive',
+  'col_to_increment': 'B_LOADID',
+  'sql_statement': 'SELECT * FROM semarchy_personLookup',
+  'primary_key': 'PERSON_LOOKUP_ID',
+  'delete_last': False
+  },
+
                 ]

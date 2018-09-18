@@ -5,6 +5,7 @@ port = ''
 
 [AWS]
 host = ''
+host_dev = ''
 user = ''
 password = ''
 sid = ''
