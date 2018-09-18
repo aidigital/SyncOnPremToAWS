@@ -39,10 +39,17 @@ if __name__ == "__main__":
 
     # # ----------------- METHOD 3 -----------------
     import concurrent.futures
+
+    ENVIRONMENT = 'Prod'  # the only possible values are: 'Dev' / 'Prod'
+
     executor = concurrent.futures.ThreadPoolExecutor(max_workers=len(tables_to_update))
-    wait_for = [executor.submit(AWS_Connecter(host=config['AWS']['host'], user=config['AWS']['user'], password=config['AWS']['password']).insert_to_oracle_specify_columns,
-                                              d['oracle_table'], d['server'], d['on_prem_database'], d['sql_statement'], d['col_to_increment'], d['primary_key'], d['delete_last'])
-                                              for d in tables_to_update] # these will immediately start getting executed
+    wait_for = [executor.submit(AWS_Connecter(environment=ENVIRONMENT).insert_to_oracle_specify_columns,
+                                              d['oracle_table'], d['server'], d['on_prem_database'], d['sql_statement'], d['col_to_increment'], d['primary_key'], d['delete_last']
+                                )
+                                for d in tables_to_update
+                                if d['oracle_table'] not in ['SA_RESIDENTS', 'SA_COMMUNICATION', 'SA_VULNERABILTY_DETAILS', 'SA_ECONOMIC_STATUS', 'SA_CONTACT_PREFRENCES', 'SA_RENT_GRP_REF', 'SA_PERSON', 'SA_PERSON_LOOKUP']
+                                #if d['oracle_table'] in ['SA_RESIDENTS', 'SA_VULNERABILTY_DETAILS','SA_ECONOMIC_STATUS', 'SA_CONTACT_PREFRENCES', 'SA_RENT_GRP_REF','SA_PERSON_LOOKUP']
+               ] # these will immediately start getting executed
     # above, I use AWS_Connecter() which creates a new object each time. However, if using the same object, cursor.executemany() fails to insert data (various errors received) when run in parallel (multiple threads)
     # so essentially, with this approach, each dict in `tables_to_update` creates 1 instance of AWS_Connecter() class, and 1 instance of OnPremise_Connecter() class
 
