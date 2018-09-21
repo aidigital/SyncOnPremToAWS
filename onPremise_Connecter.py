@@ -92,8 +92,10 @@ class OnPremise_Connecter(object):
         print('\nVIEWS:\n', inspector.get_view_names())  # doesn't work, fix it!
 
 if __name__ == "__main__":
-    onPremise = OnPremise_Connecter(server='TVHA-UH-DB03', database='clearview')
-    onPremise.fetch_to_pandas(sql_statement="""SELECT * from Elysium""")
+    onPremise = OnPremise_Connecter(server='TVHA-UH-DB03', database='Fizzy')
+    x = onPremise.fetch_to_pandas(sql_statement="""SELECT Count(*) from Area""")
+    print(x)
+
     #print( onPremise.fetch_results(sql_statement='SELECT * FROM [Fizzy].[dbo].[Area]') )
     #print(onPremise.fetch_to_pandas(sql_statement='SELECT [Property Code], [Property Name] FROM [Fizzy].[dbo].[pexPropertyIndex]'))
 

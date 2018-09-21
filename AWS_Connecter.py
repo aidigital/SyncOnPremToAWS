@@ -166,6 +166,9 @@ class AWS_Connecter():
    # http://www.oracle.com/technetwork/articles/prez-stored-proc-084100.html
     def run_oracle_function(self, instance, fct_name, fct_params):
         run_fct = instance.cursor.callfunc(fct_name, cx_Oracle.NUMBER, fct_params)
+
+        logger = logging.getLogger(__name__)
+        logger.info(f'{fct_name} called with params = {fct_params}')
         return run_fct
 
     def _sql_query_to_get_Oracle_latest_HASH_VALUES(self, oracle_table, primary_key, col_to_increment):
@@ -235,10 +238,15 @@ class AWS_Connecter():
 
         # Get the latest HASH_VALUE in ORACLE for each Primary Key (SCHEMES_ID, BLOCK_ID etc depending on the table)
         get_oracle_latest_HASH_VALUE = self._sql_query_to_get_Oracle_latest_HASH_VALUES(oracle_table=oracle_table, primary_key=primary_key, col_to_increment=col_to_increment)  # creates the SQL code
+        #print(f'get_oracle_latest_HASH_VALUE = {get_oracle_latest_HASH_VALUE}')
+
         oracle_latest_HASH_VALUE = self.fetch_to_pandas(get_oracle_latest_HASH_VALUE)  # retrieves the latest HASH_VALUE for each Primary Key
-        oracle_list_of_HASH_VALUES = oracle_latest_HASH_VALUE['latest_hash_value'].tolist()
+        #print("oracle_latest_HASH_VALUE:")
         #print(oracle_latest_HASH_VALUE)
+
+        oracle_list_of_HASH_VALUES = oracle_latest_HASH_VALUE['latest_hash_value'].tolist()
         #print('oracle_list_of_HASH_VALUES = ', oracle_list_of_HASH_VALUES)
+
 
         # If HASH_VALUE is bytes, convert it to string (this happens when HASHBYTES is used instead of CHECKSUM)
         max_hash = insert_this['HASH_VALUE'].max()
@@ -290,22 +298,18 @@ if __name__ == "__main__":
     # AWS.execute_sql(sql_statement='DELETE FROM SA_RESIDENTS')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_RENT_GRP_REF')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_PERSON')
-    #
     # AWS.execute_sql(sql_statement='DELETE FROM SA_PERSON_LOOKUP')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_CONTACT_PREFRENCES')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_COMMUNICATION')
-    #
     # AWS.execute_sql(sql_statement='DELETE FROM SA_ECONOMIC_STATUS')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_VULNERABILTY_DETAILS')
     #
     # AWS.execute_sql(sql_statement='DELETE FROM GD_RESIDENTS')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_RENT_GRP_REF')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_PERSON')
-    #
     # AWS.execute_sql(sql_statement='DELETE FROM GD_PERSON_LOOKUP')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_CONTACT_PREFRENCES')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_COMMUNICATION')
-    #
     # AWS.execute_sql(sql_statement='DELETE FROM GD_ECONOMIC_STATUS')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_VULNERABILTY_DETAILS')
 
