@@ -12,6 +12,7 @@ Rules for writing the SQL code:
 tables_to_update = [
                     # 3 Fizzy tables
                     {'oracle_table': 'SA_UNITS',
+                     'hierarchy': 12,  # 'hierarchy' -> denotes the order in which SA_to_GD jobs are run
                      'server': 'TVHA-UH-DB03',
                      'on_prem_database': 'Fizzy',
                      'col_to_increment': 'B_LOADID',
@@ -51,6 +52,7 @@ tables_to_update = [
                     },
 
                      {'oracle_table': 'SA_BLOCKS',
+                      'hierarchy': 11,
                      'server': 'TVHA-UH-DB03',
                      'on_prem_database': 'Fizzy',
                      'col_to_increment': 'B_LOADID',
@@ -74,6 +76,7 @@ tables_to_update = [
                     },
 
                      {'oracle_table': 'SA_SCHEMES',
+                      'hierarchy': 9,
                      'server': 'TVHA-UH-DB03',
                      'on_prem_database': 'Fizzy',
                      'col_to_increment': 'B_LOADID',
@@ -92,6 +95,7 @@ tables_to_update = [
 
                    # 1 SA_ESTATE_INSP_AND_CLEANING table # changed 05-Sep-2018
                    {'oracle_table': 'SA_ESTATE_INSP_AND_CLEANING',
+                    'hierarchy': 10,
                     'server': 'tvha-uh-ssrs',
                     'on_prem_database': 'MyTVH',
                     'col_to_increment': 'B_LOADID',
@@ -127,6 +131,7 @@ tables_to_update = [
 
                 # 3 KEYSTONE tables
                 {'oracle_table': 'SA_ATTRIBUTE_KEY_LOOKUP',  # changed 05-Sep-2017
+                 'hierarchy': 5,
                  'server': 'TVHA-SQL4',
                  'on_prem_database': 'keystone_live',
                  'col_to_increment': 'B_LOADID',
@@ -191,6 +196,7 @@ tables_to_update = [
                  },
 
                 {'oracle_table': 'SA_PROP_ATTRIBUTE_KEY_VALUE',  # 284,274 rows # changed 05-Sep-2018
+                 'hierarchy': 14,
                  'server': 'TVHA-SQL4',
                  'on_prem_database': 'keystone_live',
                  'col_to_increment': 'B_LOADID',
@@ -270,6 +276,7 @@ tables_to_update = [
                  },
 
                 {'oracle_table': 'SA_PROP_ATTRIBUTE_TYPE',   # changed 05-Sep-2018
+                 'hierarchy': 4,
                  'server': 'TVHA-SQL4',
                  'on_prem_database': 'keystone_live',
                  'col_to_increment': 'B_LOADID',
@@ -340,6 +347,7 @@ tables_to_update = [
 
                  # 11  VIEWS
                  {'oracle_table': 'SA_SCHEMES',
+                  'hierarchy': 12,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
@@ -349,6 +357,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_BLOCKS',
+                  'hierarchy': 11,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
@@ -358,6 +367,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_UNITS',
+                  'hierarchy': 9,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
@@ -367,6 +377,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_PROPERTY_TYPE',
+                  'hierarchy': 3,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
@@ -375,16 +386,17 @@ tables_to_update = [
                  'delete_last': False
                  },
 
-                 {'oracle_table': 'SA_MANAGING_AGENTS',
-                 'server': 'TVHA-UH-DB01',
-                 'on_prem_database': 'uhlive',
-                 'col_to_increment': 'B_LOADID',
-                 'sql_statement': 'SELECT * FROM semarchy_managingagent',
-                 'primary_key': 'MANAGING_AGENTS_ID',
-                 'delete_last': False
-                 },
+                 # {'oracle_table': 'SA_MANAGING_AGENTS',  # Amy doesn't want this anymore
+                 # 'server': 'TVHA-UH-DB01',
+                 # 'on_prem_database': 'uhlive',
+                 # 'col_to_increment': 'B_LOADID',
+                 # 'sql_statement': 'SELECT * FROM semarchy_managingagent',
+                 # 'primary_key': 'MANAGING_AGENTS_ID',
+                 # 'delete_last': False
+                 # },
 
                  {'oracle_table': 'SA_LOOKUP',
+                  'hierarchy': 1,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
@@ -394,6 +406,7 @@ tables_to_update = [
                  },
 
                 {'oracle_table': 'SA_LOCAL_AUTHORITY',
+                 'hierarchy': 6,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
@@ -403,6 +416,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_TENURE_TYPE',
+                  'hierarchy': 2,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
@@ -412,6 +426,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_STAFF_INVOLVEMENT',
+                  'hierarchy': 8,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
@@ -421,6 +436,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_UNIT_CLUSTER',
+                  'hierarchy': 7,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
@@ -430,6 +446,7 @@ tables_to_update = [
                  },
 
                 {'oracle_table': 'SA_PROPERTY_ATTRIBUTES',
+                 'hierarchy': 13,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
@@ -441,6 +458,7 @@ tables_to_update = [
 
                  # 8 New Views (Customer Data Model) - 18-Sep-2018
  {'oracle_table': 'SA_RESIDENTS',  # 15,636
+  'hierarchy': 17,
   'server': 'TVHA-UH-DB01',
   'on_prem_database': 'uhlive',
   'col_to_increment': 'B_LOADID',
@@ -450,6 +468,7 @@ tables_to_update = [
   },
 
  {'oracle_table': 'SA_COMMUNICATION',  # 90,356
+  'hierarchy': 19,
   'server': 'TVHA-UH-DB01',
   'on_prem_database': 'uhlive',
   'col_to_increment': 'B_LOADID',
@@ -459,6 +478,7 @@ tables_to_update = [
   },
 
  {'oracle_table': 'SA_VULNERABILTY_DETAILS',  # 28,780
+  'hierarchy': 19,
   'server': 'TVHA-UH-DB01',
   'on_prem_database': 'uhlive',
   'col_to_increment': 'B_LOADID',
@@ -468,6 +488,7 @@ tables_to_update = [
   },
 
  {'oracle_table': 'SA_ECONOMIC_STATUS',  # 28,780
+  'hierarchy': 19,
   'server': 'TVHA-UH-DB01',
   'on_prem_database': 'uhlive',
   'col_to_increment': 'B_LOADID',
@@ -477,6 +498,7 @@ tables_to_update = [
   },
 
  {'oracle_table': 'SA_CONTACT_PREFRENCES',  # spelling fucking mistake # 28,780
+  'hierarchy': 19,
   'server': 'TVHA-UH-DB01',
   'on_prem_database': 'uhlive',
   'col_to_increment': 'B_LOADID',
@@ -486,6 +508,7 @@ tables_to_update = [
   },
 
  {'oracle_table': 'SA_RENT_GRP_REF',  # 9
+  'hierarchy': 15,
   'server': 'TVHA-UH-DB01',
   'on_prem_database': 'uhlive',
   'col_to_increment': 'B_LOADID',
@@ -494,7 +517,8 @@ tables_to_update = [
   'delete_last': False
   },
 
- {'oracle_table': 'SA_PERSON',  # 28,845
+ {'oracle_table': 'SA_PERSON',  # 28,
+  'hierarchy': 18,
   'server': 'TVHA-UH-DB01',
   'on_prem_database': 'uhlive',
   'col_to_increment': 'B_LOADID',
@@ -504,6 +528,7 @@ tables_to_update = [
   },
 
  {'oracle_table': 'SA_PERSON_LOOKUP',  # 278
+  'hierarchy': 16,
   'server': 'TVHA-UH-DB01',
   'on_prem_database': 'uhlive',
   'col_to_increment': 'B_LOADID',

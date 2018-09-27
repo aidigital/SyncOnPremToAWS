@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
     executor = concurrent.futures.ThreadPoolExecutor(max_workers=len(tables_to_update))
     wait_for = [executor.submit(AWS_Connecter(environment=ENVIRONMENT).insert_to_oracle_specify_columns,
-                                              d['oracle_table'], d['server'], d['on_prem_database'], d['sql_statement'], d['col_to_increment'], d['primary_key'], d['delete_last']
+                                              d['oracle_table'], d['hierarchy'], config['servers'][d['server']], d['on_prem_database'], d['sql_statement'], d['col_to_increment'], d['primary_key'], d['delete_last']
                                 )
                                 for d in tables_to_update
                                 if d['oracle_table'] not in ['SA_RESIDENTS', 'SA_COMMUNICATION', 'SA_VULNERABILTY_DETAILS', 'SA_ECONOMIC_STATUS', 'SA_CONTACT_PREFRENCES', 'SA_RENT_GRP_REF', 'SA_PERSON', 'SA_PERSON_LOOKUP']

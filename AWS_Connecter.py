@@ -8,6 +8,7 @@ from time import sleep
 import pandas as pd; pd.set_option('display.width', 1000)
 import os
 from config import config
+from singleton import Singleton, Borg
 
 i = -1
 
@@ -185,7 +186,7 @@ class AWS_Connecter():
                    AND main.{col_to_increment} = grouped.{col_to_increment}""".format(oracle_table=oracle_table, PRIMARY_KEY=primary_key, col_to_increment=col_to_increment)
         return text
 
-    def insert_to_oracle_specify_columns(self, oracle_table, server, on_prem_database, sql_statement, col_to_increment, primary_key, delete_last=False):
+    def insert_to_oracle_specify_columns(self, oracle_table, hierarchy, server, on_prem_database, sql_statement, col_to_increment, primary_key, delete_last=False):
         # global i
         # i += 1
         # x = i  # this is very important
@@ -279,6 +280,7 @@ class AWS_Connecter():
 
         # Run the job that moves from SA tables to GD tables
         self.run_oracle_function(instance=instance_new, fct_name="MTA_SUBMIT_LOAD", fct_params= [auto_increment, 'INTEGRATE_HOUSING', 'adrian_iordache'])
+        Singleton(key=auto_increment, value=[hierarchy, auto_increment, "MTA_SUBMIT_LOAD", 'INTEGRATE_HOUSING', 'adrian_iordache'])  # adding somewhere where they can be accessed later
 
         # Log what the fuck happened
         logger.info('{}: {} rows inserted ({} retrieved from {}) in {} with {} = {}\n'.format(inspect.stack()[0][3], len(insert_this), nr_rows_retrieved,  on_prem_database, oracle_table, col_to_increment, auto_increment if delete_last else auto_increment+0))
@@ -290,11 +292,10 @@ class AWS_Connecter():
 
 
 if __name__ == "__main__":
-    # AWS.execute_sql(sql_statement='SELECT * from GD_BLOCKS')  # GX_LOOKUP
-    #print(AWS.fetch_to_pandas(sql_statement ='SELECT owner, table_name FROM all_tables'))
-
-    # AWS = AWS_Connecter(host='tvha-aws-semarchy-dev.csaymlyq76p1.eu-west-1.rds.amazonaws.com', user='TVHA_MDM', password='TVHA_MDM')
     AWS = AWS_Connecter(environment='Dev')
+    AWS.execute_sql(sql_statement='SELECT COUNT(*) FROM SA_RESIDENTS')  # smoke test
+    print('successful connection to AWS Oracle')
+
     # AWS.execute_sql(sql_statement='DELETE FROM SA_RESIDENTS')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_RENT_GRP_REF')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_PERSON')
@@ -366,4 +367,6 @@ if __name__ == "__main__":
     # AWS.execute_sql(sql_statement='DELETE FROM GD_PROP_ATTRIBUTE_TYPE')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_PROP_ATTRIBUTE_KEY_VALUE')
 
+    # AWS.execute_sql(sql_statement='SELECT * from GD_BLOCKS')  # GX_LOOKUP
+    #print(AWS.fetch_to_pandas(sql_statement ='SELECT owner, table_name FROM all_tables'))
     print('Done deleting')
