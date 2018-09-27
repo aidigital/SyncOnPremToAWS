@@ -21,9 +21,11 @@ if __name__ == "__main__":
 
         now_str: str = datetime.datetime.now().strftime("%Y-%m-%d %Hh %Mm %Ss")
         file_name: str = environment if file_name_time is False else environment + " " + now_str
+        filename = path_to_logs + '/' + file_name + '.txt'
 
+        print('saving logs to file:', filename)
         logging.basicConfig(
-            filename=path_to_logs + '\\' + file_name + '.txt',
+            filename=filename,
             level=logging.DEBUG,
             format="%(asctime)s - %(name)s | ThreadID: %(thread)d | %(levelname)s: %(message)s",
             filemode='w'
