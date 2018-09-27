@@ -9,6 +9,9 @@ venv/
 #1.2 ...only ignore it in the current directory
 /__pycache__
 
+
+.mypy_cache/
+
 learn_coroutines.py
 learning_concurrent_futures.py
 concurent_futures.py
