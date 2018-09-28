@@ -168,8 +168,8 @@ class AWS_Connecter():
     def run_oracle_function(self, instance, fct_name, fct_params):
         run_fct = instance.cursor.callfunc(fct_name, cx_Oracle.NUMBER, fct_params)
 
-        logger = logging.getLogger(__name__)
-        logger.info(f'{fct_name} called with params = {fct_params}')
+        #logger = logging.getLogger(__name__)
+        #logger.info(f'{fct_name} called with params = {fct_params}')
         return run_fct
 
     def _sql_query_to_get_Oracle_latest_HASH_VALUES(self, oracle_table, primary_key, col_to_increment):
@@ -252,14 +252,14 @@ class AWS_Connecter():
         # If HASH_VALUE is bytes, convert it to string (this happens when HASHBYTES is used instead of CHECKSUM)
         max_hash = insert_this['HASH_VALUE'].max()
         if isinstance(max_hash, bytes):
-            print('B_LOADID = {} -> HASH_VALUE was BYTES'.format(auto_increment))
+            #print('B_LOADID = {} -> HASH_VALUE was BYTES'.format(auto_increment))
             insert_this['HASH_VALUE'] = insert_this['HASH_VALUE'].astype('str')
 
         # Drop the rows that have the same HASH_VALUE as in the Oracle table (exit if nothing to insert)
         insert_this = insert_this[~insert_this['HASH_VALUE'].isin(oracle_list_of_HASH_VALUES)]
         #print(insert_this)
 
-        if len(insert_this) == 0:  # if all the HASH_VALUES we got from On-Prem matched the latest one from Oracle, then there's nothing to insert, so return
+        if len(insert_this) == 0:  # if all the HASH_VALUES we got from On-Prem matched the latest ones from Oracle, then there's nothing to insert, so return
             logger.info('{}: {} rows inserted ({} retrieved from {}) in {} with {} = {}\n'.format(inspect.stack()[0][3], len(insert_this), nr_rows_retrieved, on_prem_database, oracle_table, col_to_increment, auto_increment if delete_last else auto_increment + 0))
             return
 
@@ -279,8 +279,8 @@ class AWS_Connecter():
         self.connection.commit()
 
         # Run the job that moves from SA tables to GD tables
-        self.run_oracle_function(instance=instance_new, fct_name="MTA_SUBMIT_LOAD", fct_params= [auto_increment, 'INTEGRATE_HOUSING', 'adrian_iordache'])
-        Singleton(key=auto_increment, value=[hierarchy, auto_increment, "MTA_SUBMIT_LOAD", 'INTEGRATE_HOUSING', 'adrian_iordache'])  # adding somewhere where they can be accessed later
+        #self.run_oracle_function(instance=instance_new, fct_name="MTA_SUBMIT_LOAD", fct_params= [auto_increment, 'INTEGRATE_HOUSING', 'adrian_iordache'])
+        Singleton(key=auto_increment, value=[hierarchy, auto_increment, "MTA_SUBMIT_LOAD", 'INTEGRATE_HOUSING', 'adrian_iordache', oracle_table])  # adding somewhere where they can be accessed later
 
         # Log what the fuck happened
         logger.info('{}: {} rows inserted ({} retrieved from {}) in {} with {} = {}\n'.format(inspect.stack()[0][3], len(insert_this), nr_rows_retrieved,  on_prem_database, oracle_table, col_to_increment, auto_increment if delete_last else auto_increment+0))
@@ -293,8 +293,8 @@ class AWS_Connecter():
 
 if __name__ == "__main__":
     AWS = AWS_Connecter(environment='Dev')
-    AWS.execute_sql(sql_statement='SELECT COUNT(*) FROM SA_RESIDENTS')  # smoke test
-    print('successful connection to AWS Oracle')
+    #AWS.execute_sql(sql_statement='SELECT COUNT(*) FROM SA_RESIDENTS')  # smoke test
+    #print('successful connection to AWS Oracle')
 
     # AWS.execute_sql(sql_statement='DELETE FROM SA_RESIDENTS')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_RENT_GRP_REF')
@@ -313,27 +313,16 @@ if __name__ == "__main__":
     # AWS.execute_sql(sql_statement='DELETE FROM GD_COMMUNICATION')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_ECONOMIC_STATUS')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_VULNERABILTY_DETAILS')
-
-
-
-
-
-    ###############
-    # AWS.execute_sql(sql_statement="""CREATE TABLE INSERT_
-    #                                  ( PROPERTY_CODE varchar2(50) NOT NULL,
-    #                                    PROPERTY_NAME varchar2(50) NOT NULL
-    #                                  )
-    #                               """
-    #                 )
-
-    #AWS.execute_sql(sql_statement='DROP TABLE Dummy_Table PURGE')  # this deletes the table completely
+    #
+    #
+    # #AWS.execute_sql(sql_statement='DROP TABLE Dummy_Table PURGE')  # this deletes the table completely
     # AWS.execute_sql(sql_statement='DELETE FROM SA_UNITS')  # this deletes only the data
     # AWS.execute_sql(sql_statement='DELETE FROM SA_SCHEMES')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_BLOCKS')
     #
     # AWS.execute_sql(sql_statement='DELETE FROM SA_ESTATE_INSP_AND_CLEANING')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_PROPERTY_TYPE')
-    # AWS.execute_sql(sql_statement='DELETE FROM SA_MANAGING_AGENTS')
+    #
     #
     # AWS.execute_sql(sql_statement='DELETE FROM SA_LOOKUP')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_LOCAL_AUTHORITY')
@@ -353,7 +342,6 @@ if __name__ == "__main__":
     #
     # AWS.execute_sql(sql_statement='DELETE FROM GD_ESTATE_INSP_AND_CLEANING')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_PROPERTY_TYPE')
-    # AWS.execute_sql(sql_statement='DELETE FROM GD_MANAGING_AGENTS')
     #
     # AWS.execute_sql(sql_statement='DELETE FROM GD_LOOKUP')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_LOCAL_AUTHORITY')
@@ -367,6 +355,14 @@ if __name__ == "__main__":
     # AWS.execute_sql(sql_statement='DELETE FROM GD_PROP_ATTRIBUTE_TYPE')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_PROP_ATTRIBUTE_KEY_VALUE')
 
-    # AWS.execute_sql(sql_statement='SELECT * from GD_BLOCKS')  # GX_LOOKUP
+    ###############
+    # AWS.execute_sql(sql_statement="""CREATE TABLE INSERT_
+    #                                  ( PROPERTY_CODE varchar2(50) NOT NULL,
+    #                                    PROPERTY_NAME varchar2(50) NOT NULL
+    #                                  )
+    #                               """
+    #                 )
+
+    #AWS.execute_sql(sql_statement='SELECT * from GD_BLOCKS')  # GX_LOOKUP
     #print(AWS.fetch_to_pandas(sql_statement ='SELECT owner, table_name FROM all_tables'))
     print('Done deleting')

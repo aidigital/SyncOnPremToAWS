@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
         def path_to_desktop() -> str:  # this func is only called when running on Windows
             desktop: str = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-            return desktop
+            return desktop + '/Logs Semarchy'
 
         path_to_logs: str = path_to_logs if path_to_logs is not None else path_to_desktop() if "win" in sys.platform else "/opt/semarchy/SemarchyLogs" if "linux" in sys.platform else "foo"
 
@@ -32,7 +32,6 @@ if __name__ == "__main__":
         )
 
     set_logging(environment=ENVIRONMENT, file_name_time=True)  # just provide the path_to_logs if you want to save them somewhere else
-
 
     # ----------------- METHOD 1 -----------------
     # good old for loop - no parallelism here, each function starts after the previous one finishes
@@ -71,15 +70,15 @@ if __name__ == "__main__":
     # above, I use AWS_Connecter() which creates a new object each time. However, if using the same object, cursor.executemany() fails to insert data (various errors received) when run in parallel (multiple threads)
     # so essentially, with this approach, each dict in `tables_to_update` creates 1 instance of AWS_Connecter() class, and 1 instance of OnPremise_Connecter() class
 
-    # print(wait_for, '\n')  # List of Future Instances, each Instance having `state` = `running`
+    print("futures:", wait_for) # List of Future Instances, each Instance having `state` = `running`
 
     import traceback
     for f in concurrent.futures.as_completed(wait_for):
         try:
             print('{} returned --> {}'.format(f, f.result()))  # .result() blocks until the task Completes (either by returning a value or raising an exception), or is Canceled
         except Exception:
-            print('unexpected error: ', traceback.format_exc())
-            logging.info('Unexpected Error:\n{}'.format(traceback.format_exc()))
+            print('--unexpected error with future {}: {}'.format(f, traceback.format_exc()) )
+            logging.info('--unexpected error with future {}:\n{}'.format(f, traceback.format_exc()))
 
     print('\n', wait_for)  # List of Future Instances, each Instance having `state` = `finished` (+ the result returned or exception raised)
 
@@ -101,10 +100,10 @@ if __name__ == "__main__":
     runJobs = AWS_Connecter(environment=ENVIRONMENT, host=host, user=user, password=password)
 
     for func in SA_to_GD_functions_sorted:
-        #runJobs.run_oracle_function(instance=runJobs, fct_name=func[2], fct_params=[func[1], func[3], func[4]])  # ex: fct_params = [auto_increment, 'INTEGRATE_HOUSING', 'adrian_iordache']
+        runJobs.run_oracle_function(instance=runJobs, fct_name=func[2], fct_params=[func[1], func[3], func[4]])  # ex: fct_params = [auto_increment, 'INTEGRATE_HOUSING', 'adrian_iordache']
         sleep(2)
-        print(f'function MTA_SUBMIT_LOAD with ID {func[1]} has been sent to Semarchy')
-
+        print(f'MTA_SUBMIT_LOAD(id= {func[1]}) for table {func[5]} (priority: {func[0]}) has been sent to Semarchy')
+        logging.info(f'MTA_SUBMIT_LOAD(id= {func[1]}) for table {func[5]} (priority: {func[0]}) has been sent to Semarchy')
 
 
     # Print we're done

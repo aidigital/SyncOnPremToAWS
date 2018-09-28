@@ -158,12 +158,12 @@ tables_to_update = [
                                                                                                ,sa.SurveyAttributeID
                                                                                                ,sa.Attribute
                                                                                                ,sa.InstallationDate
-                                                                                               ,NULL AS RepairID
-                                                                                               ,NULL AS SurveyRepairID
-                                                                                               ,NULL AS RepairDescription
-                                                                                               ,NULL AS Quantity
-                                                                                               ,NULL AS YearDue
-                                                                                               ,NULL AS RepairCost
+                                                                                               ,NULL as RepairID
+                                                                                               ,NULL as SurveyRepairID
+                                                                                               ,NULL as RepairDescription
+                                                                                               ,NULL as Quantity
+                                                                                               ,NULL as YearDue
+                                                                                               ,NULL as RepairCost
                                                                                                ,sa.Surveyor
                                                                                                FROM MIView_Asset a
                                                                                                JOIN MIView_Asset_SurveyAttributes sa ON a.AssetID = sa.AssetID
@@ -278,9 +278,9 @@ tables_to_update = [
                 {'oracle_table': 'SA_PROP_ATTRIBUTE_TYPE',   # changed 05-Sep-2018
                  'hierarchy': 4,
                  'server': 'TVHA-SQL4',
-                 'on_prem_database': 'keystone_live',
+                 'on_prem_database': 'Keystone_Live',
                  'col_to_increment': 'B_LOADID',
-                 'sql_statement': """ SELECT DISTINCT                'TP_' + cast(b.RepairElementID AS Varchar) AS PROP_ATTRIBUTE_TYPE_ID,  -- this works
+                 'sql_statement': """SELECT DISTINCT 'TP_' + cast(b.RepairElementID as Varchar) AS PROP_ATTRIBUTE_TYPE_ID,
                                                                       b.RepairElement AS TYPE_NAME,
                                                                       'COMPONENTS' AS TYPE_CATEGORY,
                                                                       'Units' AS PROPERTY_LEVEL,
@@ -306,12 +306,12 @@ tables_to_update = [
                                                                         ,sa.SurveyAttributeID
                                                                         ,sa.Attribute
                                                                         ,sa.InstallationDate
-                                                                        ,NULL AS RepairID
-                                                                        ,NULL AS SurveyRepairID
-                                                                        ,NULL AS RepairDescription
-                                                                        ,NULL AS Quantity
-                                                                        ,NULL AS YearDue
-                                                                        ,NULL AS RepairCost
+                                                                        ,NULL as RepairID
+                                                                        ,NULL as SurveyRepairID
+                                                                        ,NULL as RepairDescription
+                                                                        ,NULL as Quantity
+                                                                        ,NULL as YearDue
+                                                                        ,NULL as RepairCost
                                                                         ,sa.Surveyor
                                                                         FROM MIView_Asset a
                                                                         JOIN MIView_Asset_SurveyAttributes sa ON a.AssetID = sa.AssetID
@@ -347,7 +347,7 @@ tables_to_update = [
 
                  # 11  VIEWS
                  {'oracle_table': 'SA_SCHEMES',
-                  'hierarchy': 12,
+                  'hierarchy': 9 ,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
@@ -367,7 +367,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_UNITS',
-                  'hierarchy': 9,
+                  'hierarchy': 12,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
                  'col_to_increment': 'B_LOADID',
