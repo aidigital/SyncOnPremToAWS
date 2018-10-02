@@ -33,7 +33,8 @@ class OnPremise_Connecter():
         # Logic for connecting to Oracle:
         def _connect_to_Oracle():
             #self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
-            self.SID = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
+            #self.SID = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
+            self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.database)
             print('self.SID =', self.SID)
             con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.SID)
             print('con = ', con)
