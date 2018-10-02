@@ -32,37 +32,25 @@ class OnPremise_Connecter():
 
         # Logic for connecting to Oracle:
         def _connect_to_Oracle():
-            #self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
-            #self.SID = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
-            self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.database)          # dsn is an invalid keyword
-            print('self.SID =', self.SID)
+            #self.DSN = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
+            #self.DSN = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
+            self.DSN = cx_Oracle.makedsn(self.host, self.port, sid=self.database)          # dsn is an invalid keyword
+            print('self.DSN =', self.DSN)
 
-            #con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.SID)  # sid, tns -> invalid arguments
+            # Method 1
+            # connection_string = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.DSN)
+            # self.engine = sqlalchemy.create_engine(connection_string, convert_unicode=False, pool_recycle=1000, pool_size=1000, echo=False)
+            # print('self.engine = ', self.engine)
+            #
+            # self.connection = cx_Oracle.Connection("{}/{}@{}".format(self.user, self.password, self.DSN))
+            # print("self.connection = ", self.connection)
+            # self.cursor = cx_Oracle.Cursor(self.connection)
 
-            connection_string = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.SID)
-            self.engine = sqlalchemy.create_engine(connection_string, convert_unicode=False, pool_recycle=1000, pool_size=1000, echo=False)
-            print('self.engine = ', self.engine)
-
-            self.connection = cx_Oracle.Connection("{}/{}@{}".format(self.user, self.password, self.SID))
-            print("self.connection = ", self.connection)
-            self.cursor = cx_Oracle.Cursor(self.connection)
-
-
-            # try this instead
-            #con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.database)
-
+            # Method 2
+            con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.DSN)  # sid, tns -> invalid arguments
             #con = cx_Oracle.connect(f'{self.user}/{self.password}@{self.host}:{self.port}/{self.SID}')
-#            print('con = ', con)
+            print('con = ', con)
             return 'connected to Oracle On Prem'
-
-            connection_string = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.SID)
-            #execution_options = {"timeout": 10000, "statement_timeout": 10000, "query_timeout": 10000, "execution_timeout": 10000}
-            self.engine = sqlalchemy.create_engine(connection_string, convert_unicode=False, pool_recycle=1000, pool_size=1000, echo=False)  # pool_pre_ping=True
-
-              # used for inserting
-            self.connection = cx_Oracle.Connection("{}/{}@{}".format(self.user, self.password, self.SID))
-            self.cursor = cx_Oracle.Cursor(self.connection)
-            return "ran script to connect to On-Prem Oracle"
 
         if company == 'TVH':
             _connect_to_SQL_Server()
