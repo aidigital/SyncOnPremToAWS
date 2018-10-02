@@ -36,7 +36,7 @@ class OnPremise_Connecter():
             #self.SID = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
             self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.database)
             print('self.SID =', self.SID)
-            con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.SID)
+            con = cx_Oracle.connect(user=self.user, password=self.password, sid=self.SID)
             print('con = ', con)
             return con
 
