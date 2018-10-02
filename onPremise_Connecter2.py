@@ -35,17 +35,21 @@ class OnPremise_Connecter():
             #self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
             #self.SID = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
             self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.database)          # dsn is an invalid keyword
-
-
             print('self.SID =', self.SID)
+
             #con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.SID)  # sid, tns -> invalid arguments
 
-            # try this instead
-            #con = cx_Oracle.connect(user=self.user, password=self.password, sid=self.database)  # sid is an invalid argument
+            connection_string = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.SID)
+            self.engine = sqlalchemy.create_engine(connection_string, convert_unicode=False, pool_recycle=1000, pool_size=1000, echo=False)
 
-            con = cx_Oracle.connect(f'{self.user}/{self.password}@{self.host}:{self.port}/{self.SID}')
-            print('con = ', con)
-            return con
+            print('self.engine = ', self.engine)
+
+            # try this instead
+            #con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.database)
+
+            #con = cx_Oracle.connect(f'{self.user}/{self.password}@{self.host}:{self.port}/{self.SID}')
+#            print('con = ', con)
+            return 'connected to Oracle On Prem'
 
             connection_string = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.SID)
             #execution_options = {"timeout": 10000, "statement_timeout": 10000, "query_timeout": 10000, "execution_timeout": 10000}
