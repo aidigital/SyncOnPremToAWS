@@ -39,8 +39,8 @@ class OnPremise_Connecter():
             self.engine = sqlalchemy.create_engine(connection_string, convert_unicode=False, pool_recycle=1000, pool_size=1000, echo=False)  # pool_pre_ping=True
 
               # used for inserting
-            self.connection = cx_Oracle.Connection("{}/{}@{}".format(self.user, self.password, self.SID))
-            self.cursor = cx_Oracle.Cursor(self.connection)
+            #self.connection = cx_Oracle.Connection("{}/{}@{}".format(self.user, self.password, self.SID))
+            #self.cursor = cx_Oracle.Cursor(self.connection)
             return "ran script to connect to On-Prem Oracle"
 
         if company == 'TVH':
