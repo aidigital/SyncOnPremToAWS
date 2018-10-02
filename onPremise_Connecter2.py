@@ -47,6 +47,7 @@ class OnPremise_Connecter():
             # self.cursor = cx_Oracle.Cursor(self.connection)
 
             # Method 2
+            print(f'trying to connect with user={self.user} and password={self.password}')
             con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.DSN)  # sid, tns -> invalid arguments
             #con = cx_Oracle.connect(f'{self.user}/{self.password}@{self.host}:{self.port}/{self.SID}')
             print('con = ', con)
