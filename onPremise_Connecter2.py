@@ -21,7 +21,7 @@ class OnPremise_Connecter():
 
         self.driver = 'ODBC+Driver+13+for+SQL+Server'
         self.host = config['servers']['MTH-TEST']
-        self.sid = None
+        self.sid = "ora1" #None
 
         # Logic for connecting to SQL Server:
         def _connect_to_SQL_Server():
