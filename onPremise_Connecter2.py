@@ -41,7 +41,7 @@ class OnPremise_Connecter():
             #con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.SID)  # sid is an invalid argument
 
             # try this instead
-            con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.database)  # sid is an invalid argument
+            con = cx_Oracle.connect(user=self.user, password=self.password, tns=self.database)  # sid is an invalid argument
             print('con = ', con)
             return con
 
