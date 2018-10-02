@@ -39,6 +39,7 @@ class AWS_Connecter():
         self.connection = cx_Oracle.Connection("{}/{}@{}".format(self.user, self.password, self.SID))
         self.cursor = cx_Oracle.Cursor(self.connection)
 
+
         logging.info('Instantiated: {}'.format(__class__.__name__))
 
     def execute_sql(self, sql_statement):
