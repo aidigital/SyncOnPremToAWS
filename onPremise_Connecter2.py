@@ -41,8 +41,12 @@ class OnPremise_Connecter():
 
             connection_string = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.SID)
             self.engine = sqlalchemy.create_engine(connection_string, convert_unicode=False, pool_recycle=1000, pool_size=1000, echo=False)
-
             print('self.engine = ', self.engine)
+
+            self.connection = cx_Oracle.Connection("{}/{}@{}".format(self.user, self.password, self.SID))
+            print("self.connection = ", self.connection)
+            self.cursor = cx_Oracle.Cursor(self.connection)
+
 
             # try this instead
             #con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.database)
