@@ -21,7 +21,7 @@ class OnPremise_Connecter():
 
         self.driver = 'ODBC+Driver+13+for+SQL+Server'
         self.host = config['servers']['MTH-TEST']
-        self.sid = "ora1" #None
+        self.sid = "ora1"  # None
 
         # Logic for connecting to SQL Server:
         def _connect_to_SQL_Server():
@@ -33,7 +33,8 @@ class OnPremise_Connecter():
         # Logic for connecting to Oracle:
         def _connect_to_Oracle():
             #self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
-            self.SID = cx_Oracle.makedsn(self.host, self.port, service_name=self.database)
+            self.SID = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
+            print('self.SID =', self.SID)
 
             connection_string = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.SID)
             #execution_options = {"timeout": 10000, "statement_timeout": 10000, "query_timeout": 10000, "execution_timeout": 10000}
