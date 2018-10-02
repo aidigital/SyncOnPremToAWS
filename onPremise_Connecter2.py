@@ -32,15 +32,16 @@ class OnPremise_Connecter():
 
         # Logic for connecting to Oracle:
         def _connect_to_Oracle():
-            self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
+            #self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
+            self.SID = cx_Oracle.makedsn(self.host, self.port, service_name=self.database)
 
             connection_string = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.SID)
             #execution_options = {"timeout": 10000, "statement_timeout": 10000, "query_timeout": 10000, "execution_timeout": 10000}
             self.engine = sqlalchemy.create_engine(connection_string, convert_unicode=False, pool_recycle=1000, pool_size=1000, echo=False)  # pool_pre_ping=True
 
               # used for inserting
-            #self.connection = cx_Oracle.Connection("{}/{}@{}".format(self.user, self.password, self.SID))
-            #self.cursor = cx_Oracle.Cursor(self.connection)
+            self.connection = cx_Oracle.Connection("{}/{}@{}".format(self.user, self.password, self.SID))
+            self.cursor = cx_Oracle.Cursor(self.connection)
             return "ran script to connect to On-Prem Oracle"
 
         if company == 'TVH':
