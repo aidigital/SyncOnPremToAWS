@@ -34,9 +34,10 @@ class OnPremise_Connecter():
         def _connect_to_Oracle():
             #self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
             #self.SID = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
-            self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.database)
+            self.SID = cx_Oracle.makedsn(self.host, self.port, dsn=self.database)
+
             print('self.SID =', self.SID)
-            con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.SID, mode=cx_Oracle.SYSDBA)  # sid is an invalid argument
+            con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.SID)  # sid is an invalid argument
             print('con = ', con)
             return con
 
@@ -120,7 +121,7 @@ if __name__ == "__main__":
     #onPremise = OnPremise_Connecter(server=config['servers']['TVHA-UH-DB03'], database='clearview')
     #x = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) from Elysium')
 
-    onPremise = OnPremise_Connecter(server=config['servers']['MTH-TEST'], database=config['On-Premise-MTH']['db'])
+    onPremise = OnPremise_Connecter(server=config['servers']['MTH-TEST'], database=config['On-Premise-MTH']['db'], company='MTH')
     x = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) from tvh_sa_communication_test')
     print(x)
     print('successful connection to On-Prem')
