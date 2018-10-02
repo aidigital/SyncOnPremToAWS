@@ -34,7 +34,7 @@ class OnPremise_Connecter():
         def _connect_to_Oracle():
             #self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
             #self.SID = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
-            self.SID = cx_Oracle.makedsn(self.host, self.port, dsn=self.database)
+            self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.database)          # dsn is an invalid keyword
 
             print('self.SID =', self.SID)
             con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.SID)  # sid is an invalid argument
@@ -118,11 +118,12 @@ class OnPremise_Connecter():
         print('\nVIEWS:\n', inspector.get_view_names())  # doesn't work, fix it!
 
 if __name__ == "__main__":
-    #onPremise = OnPremise_Connecter(server=config['servers']['TVHA-UH-DB03'], database='clearview')
-    #x = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) from Elysium')
+    # onPremise = OnPremise_Connecter(server=config['servers']['TVHA-UH-DB03'], database='clearview', company='TVH')
+    # x = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) from Elysium')
 
     onPremise = OnPremise_Connecter(server=config['servers']['MTH-TEST'], database=config['On-Premise-MTH']['db'], company='MTH')
     x = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) from tvh_sa_communication_test')
+
     print(x)
     print('successful connection to On-Prem')
 
