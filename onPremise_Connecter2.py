@@ -35,6 +35,9 @@ class OnPremise_Connecter():
             #self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
             self.SID = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
             print('self.SID =', self.SID)
+            con = cx_Oracle.connect(user="myuser", password="mypass", dsn=self.SID)
+            print('con = ', con)
+            return con
 
             connection_string = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.SID)
             #execution_options = {"timeout": 10000, "statement_timeout": 10000, "query_timeout": 10000, "execution_timeout": 10000}
