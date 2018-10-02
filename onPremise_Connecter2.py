@@ -34,7 +34,8 @@ class OnPremise_Connecter():
         def _connect_to_Oracle():
             #self.DSN = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
             #self.DSN = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
-            self.DSN = cx_Oracle.makedsn(self.host, self.port, sid=self.database)          # dsn is an invalid keyword
+#            self.DSN = cx_Oracle.makedsn(self.host, self.port, sid=self.database)          # dsn is an invalid keyword
+            self.DSN = cx_Oracle.makedsn(self.host, self.port)
             print('self.DSN =', self.DSN)
 
             # Method 1
