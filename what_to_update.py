@@ -537,4 +537,25 @@ tables_to_update = [
   'delete_last': False
   },
 
-                ]
+  # added on 06-Nov-2018
+ {'oracle_table': 'SA_ALERT_INFO_LOOKUP',
+  'hierarchy': 20,
+  'server': 'TVHA-UH-DB01',
+  'on_prem_database': 'uhlive',
+  'col_to_increment': 'B_LOADID',
+  'sql_statement': 'SELECT * FROM semarchy_alertInfoLookup',
+  'primary_key': 'ALERT_INFO_LOOKUP_ID',
+  'delete_last': False
+  },
+
+ {'oracle_table': 'SA_ALERTS_INFO_MASTER',
+   'hierarchy': 21,
+   'server': 'TVHA-UH-DB01',
+   'on_prem_database': 'uhlive',
+   'col_to_increment': 'B_LOADID',
+   'sql_statement': 'SELECT * FROM semarchy_alertInfoMaster',
+   'primary_key': 'ALERTS_INFO_MASTER_ID',
+   'delete_last': False
+   },
+
+]

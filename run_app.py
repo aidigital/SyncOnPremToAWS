@@ -64,7 +64,8 @@ if __name__ == "__main__":
                                               d['oracle_table'], d['hierarchy'], config['servers'][d['server']], d['on_prem_database'], d['sql_statement'], d['col_to_increment'], d['primary_key'], d['delete_last']
                                 )
                                 for d in tables_to_update
-                                if d['oracle_table'] not in ['SA_RESIDENTS', 'SA_COMMUNICATION', 'SA_VULNERABILTY_DETAILS', 'SA_ECONOMIC_STATUS', 'SA_CONTACT_PREFRENCES', 'SA_RENT_GRP_REF', 'SA_PERSON', 'SA_PERSON_LOOKUP']
+                                if d['oracle_table'] not in ['SA_ALERT_INFO_LOOKUP', 'SA_ALERTS_INFO_MASTER']
+                                #if d['oracle_table'] not in ['SA_RESIDENTS', 'SA_COMMUNICATION', 'SA_VULNERABILTY_DETAILS', 'SA_ECONOMIC_STATUS', 'SA_CONTACT_PREFRENCES', 'SA_RENT_GRP_REF', 'SA_PERSON', 'SA_PERSON_LOOKUP']
                                 #if d['oracle_table'] in  ['SA_RENT_GRP_REF'] #['SA_ECONOMIC_STATUS', 'SA_CONTACT_PREFRENCES', 'SA_COMMUNICATION', 'SA_VULNERABILTY_DETAILS']
                ] # these will immediately start getting executed
     # above, I use AWS_Connecter() which creates a new object each time. However, if using the same object, cursor.executemany() fails to insert data (various errors received) when run in parallel (multiple threads)
