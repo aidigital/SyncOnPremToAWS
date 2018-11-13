@@ -1,36 +1,14 @@
-from AWS_Connecter import AWS_Connecter
-from what_to_update import tables_to_update
 import logging
-import os
-from config import config
 from typing import Dict, List, Any
 from time import sleep
 
+from AWS_Connecter import AWS_Connecter
+from what_to_update import tables_to_update
+from config import config
+from UDFs import set_logging
+
 if __name__ == "__main__":
-    ENVIRONMENT = 'Dev'  # the only possible values are: 'Dev' / 'Prod'
-
-    def set_logging(environment: str, path_to_logs: str = None, file_name_time: bool = False) -> None:
-        import datetime
-        import sys
-
-        def path_to_desktop() -> str:  # this func is only called when running on Windows
-            desktop: str = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-            return desktop + '/Logs Semarchy'
-
-        path_to_logs: str = path_to_logs if path_to_logs is not None else path_to_desktop() if "win" in sys.platform else "/opt/semarchy/SemarchyLogs" if "linux" in sys.platform else "foo"
-
-        now_str: str = datetime.datetime.now().strftime("%Y-%m-%d %Hh %Mm %Ss")
-        file_name: str = environment if file_name_time is False else environment + " " + now_str
-        filename = path_to_logs + '/' + file_name + '.txt'
-
-        print('saving logs to file:', filename)
-        logging.basicConfig(
-            filename=filename,
-            level=logging.DEBUG,
-            format="%(asctime)s - %(name)s | ThreadID: %(thread)d | %(levelname)s: %(message)s",
-            filemode='w'
-        )
-
+    ENVIRONMENT = 'Dev'   # the only possible values are: 'Dev' / 'Prod'
     set_logging(environment=ENVIRONMENT, file_name_time=True)  # just provide the path_to_logs if you want to save them somewhere else
 
     # ----------------- METHOD 1 -----------------
@@ -64,7 +42,7 @@ if __name__ == "__main__":
                                               d['oracle_table'], d['hierarchy'], config['servers'][d['server']], d['on_prem_database'], d['sql_statement'], d['col_to_increment'], d['primary_key'], d['delete_last']
                                 )
                                 for d in tables_to_update
-                                if d['oracle_table'] in ['SA_ALERT_INFO_LOOKUP', 'SA_ALERTS_INFO_MASTER']
+                                #if d['oracle_table'] in ['SA_ALERT_INFO_LOOKUP', 'SA_ALERTS_INFO_MASTER']
                                 # if d['oracle_table'] not in ['SA_RESIDENTS', 'SA_COMMUNICATION', 'SA_VULNERABILTY_DETAILS', 'SA_ECONOMIC_STATUS', 'SA_CONTACT_PREFRENCES', 'SA_RENT_GRP_REF', 'SA_PERSON', 'SA_PERSON_LOOKUP']
                                 #if d['oracle_table'] in ['SA_ECONOMIC_STATUS', 'SA_CONTACT_PREFRENCES', 'SA_COMMUNICATION', 'SA_VULNERABILTY_DETAILS']
                ] # these will immediately start getting executed

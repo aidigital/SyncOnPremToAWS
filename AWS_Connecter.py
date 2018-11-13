@@ -1,14 +1,12 @@
-import sqlalchemy
-import cx_Oracle
-from pprint import pprint
-import logging
 import inspect
-from UDFs import all_next_words_after_word, modify_script
-from time import sleep
+import logging
+import cx_Oracle
+import sqlalchemy
 import pandas as pd; pd.set_option('display.width', 1000)
-import os
+
+from UDFs import all_next_words_after_word, modify_script
 from config import config
-from singleton import Singleton, Borg
+from singleton import Singleton
 
 i = -1
 

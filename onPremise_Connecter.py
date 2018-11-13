@@ -1,9 +1,8 @@
 import sqlalchemy
-from pprint import pprint
-import pandas as pd; pd.set_option('display.width', 1000)
 import logging
 import inspect
-import numpy as np
+import pandas as pd; pd.set_option('display.width', 1000)
+
 from config import config
 
 class OnPremise_Connecter(object):

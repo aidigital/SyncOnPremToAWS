@@ -1,11 +1,10 @@
 import sqlalchemy
-from pprint import pprint
-import pandas as pd; pd.set_option('display.width', 1000)
 import logging
 import inspect
-import numpy as np
-from config import config
 import cx_Oracle
+import pandas as pd; pd.set_option('display.width', 1000)
+
+from config import config
 
 # This class should connect to both SQL Server, and Oracle
 class OnPremise_Connecter():
@@ -21,38 +20,17 @@ class OnPremise_Connecter():
 
         self.driver = 'ODBC+Driver+13+for+SQL+Server'
         self.host = config['servers']['MTH-TEST']
-        self.sid = "ora1"  # None
 
         # Logic for connecting to SQL Server:
-        def _connect_to_SQL_Server():
+        def _connect_to_SQL_Server() -> None:
             connection_string = 'mssql+pyodbc://{user}:{password}@{server}:{port}/{db}?driver={driver}'.format(user=self.user, password=self.password, server=self.server, db=self.database, port=self.port, driver=self.driver)
             self.engine = sqlalchemy.create_engine(connection_string)
             self.connection = self.engine.connect()
-            return "ran script to connect to On-Prem SQL Server"
 
         # Logic for connecting to Oracle:
-        def _connect_to_Oracle():
-            #self.DSN = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
-            #self.DSN = cx_Oracle.makedsn(self.host, self.port, service_name=self.sid)
-#            self.DSN = cx_Oracle.makedsn(self.host, self.port, sid=self.database)          # dsn is an invalid keyword
-            self.DSN = cx_Oracle.makedsn(self.host, self.port, sid=self.database)
-            print('self.DSN =', self.DSN)
-
-            # Method 1
-            # connection_string = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.DSN)
-            # self.engine = sqlalchemy.create_engine(connection_string, convert_unicode=False, pool_recycle=1000, pool_size=1000, echo=False)
-            # print('self.engine = ', self.engine)
-            #
-            # self.connection = cx_Oracle.Connection("{}/{}@{}".format(self.user, self.password, self.DSN))
-            # print("self.connection = ", self.connection)
-            # self.cursor = cx_Oracle.Cursor(self.connection)
-
-            # Method 2
-            print(f'trying to connect with user={self.user} and password={self.password}')
-            con = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.DSN)  # sid, tns -> invalid arguments
-            #con = cx_Oracle.connect(f'{self.user}/{self.password}@{self.host}:{self.port}/{self.SID}')
-            print('con = ', con)
-            return 'connected to Oracle On Prem'
+        def _connect_to_Oracle() -> None:
+            self.DSN = cx_Oracle.makedsn(self.host, self.port, service_name=self.database)  # dsn is an invalid keyword
+            self.connection = cx_Oracle.connect(user=self.user, password=self.password, dsn=self.DSN)  # sid, tns -> invalid arguments
 
         if company == 'TVH':
             _connect_to_SQL_Server()
@@ -61,8 +39,7 @@ class OnPremise_Connecter():
         else:
             print("On-Prem did not try to connect to anything!")
 
-
-        logging.info('Instantiated: {} for {} db'.format(__class__.__name__, database))
+        logging.info('Instantiated: {} for {} db from {}'.format(__class__.__name__, database, company))
 
 
     def execute_sql(self, sql_statement):

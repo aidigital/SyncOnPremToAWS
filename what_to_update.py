@@ -12,6 +12,7 @@ Rules for writing the SQL code:
 tables_to_update = [
                     # 3 Fizzy tables
                     {'oracle_table': 'SA_UNITS',
+                     'company': 'TVH',
                      'hierarchy': 12,  # 'hierarchy' -> denotes the order in which SA_to_GD jobs are run
                      'server': 'TVHA-UH-DB03',
                      'on_prem_database': 'Fizzy',
@@ -52,6 +53,7 @@ tables_to_update = [
                     },
 
                      {'oracle_table': 'SA_BLOCKS',
+                      'company': 'TVH',
                       'hierarchy': 11,
                      'server': 'TVHA-UH-DB03',
                      'on_prem_database': 'Fizzy',
@@ -76,6 +78,7 @@ tables_to_update = [
                     },
 
                      {'oracle_table': 'SA_SCHEMES',
+                      'company': 'TVH',
                       'hierarchy': 9,
                      'server': 'TVHA-UH-DB03',
                      'on_prem_database': 'Fizzy',
@@ -95,6 +98,7 @@ tables_to_update = [
 
                    # 1 SA_ESTATE_INSP_AND_CLEANING table # changed 05-Sep-2018
                    {'oracle_table': 'SA_ESTATE_INSP_AND_CLEANING',
+                    'company': 'TVH',
                     'hierarchy': 10,
                     'server': 'tvha-uh-ssrs',
                     'on_prem_database': 'MyTVH',
@@ -131,6 +135,7 @@ tables_to_update = [
 
                 # 3 KEYSTONE tables
                 {'oracle_table': 'SA_ATTRIBUTE_KEY_LOOKUP',  # changed 05-Sep-2017
+                 'company': 'TVH',
                  'hierarchy': 5,
                  'server': 'TVHA-SQL4',
                  'on_prem_database': 'keystone_live',
@@ -196,6 +201,7 @@ tables_to_update = [
                  },
 
                 {'oracle_table': 'SA_PROP_ATTRIBUTE_KEY_VALUE',  # 284,274 rows # changed 05-Sep-2018
+                 'company': 'TVH',
                  'hierarchy': 14,
                  'server': 'TVHA-SQL4',
                  'on_prem_database': 'keystone_live',
@@ -276,6 +282,7 @@ tables_to_update = [
                  },
 
                 {'oracle_table': 'SA_PROP_ATTRIBUTE_TYPE',   # changed 05-Sep-2018
+                 'company': 'TVH',
                  'hierarchy': 4,
                  'server': 'TVHA-SQL4',
                  'on_prem_database': 'Keystone_Live',
@@ -347,6 +354,7 @@ tables_to_update = [
 
                  # 11  VIEWS
                  {'oracle_table': 'SA_SCHEMES',
+                   'company': 'TVH',
                   'hierarchy': 9 ,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
@@ -357,6 +365,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_BLOCKS',
+                  'company': 'TVH',
                   'hierarchy': 11,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
@@ -367,6 +376,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_UNITS',
+                  'company': 'TVH',
                   'hierarchy': 12,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
@@ -377,6 +387,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_PROPERTY_TYPE',
+                  'company': 'TVH',
                   'hierarchy': 3,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
@@ -396,6 +407,7 @@ tables_to_update = [
                  # },
 
                  {'oracle_table': 'SA_LOOKUP',
+                  'company': 'TVH',
                   'hierarchy': 1,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
@@ -406,6 +418,7 @@ tables_to_update = [
                  },
 
                 {'oracle_table': 'SA_LOCAL_AUTHORITY',
+                 'company': 'TVH',
                  'hierarchy': 6,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
@@ -416,6 +429,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_TENURE_TYPE',
+                  'company': 'TVH',
                   'hierarchy': 2,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
@@ -426,6 +440,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_STAFF_INVOLVEMENT',
+                  'company': 'TVH',
                   'hierarchy': 8,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
@@ -436,6 +451,7 @@ tables_to_update = [
                  },
 
                  {'oracle_table': 'SA_UNIT_CLUSTER',
+                  'company': 'TVH',
                   'hierarchy': 7,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
@@ -446,6 +462,7 @@ tables_to_update = [
                  },
 
                 {'oracle_table': 'SA_PROPERTY_ATTRIBUTES',
+                 'company': 'TVH',
                  'hierarchy': 13,
                  'server': 'TVHA-UH-DB01',
                  'on_prem_database': 'uhlive',
@@ -457,105 +474,115 @@ tables_to_update = [
 
 
                  # 8 New Views (Customer Data Model) - 18-Sep-2018
- {'oracle_table': 'SA_RESIDENTS',  # 15,636
-  'hierarchy': 17,
-  'server': 'TVHA-UH-DB01',
-  'on_prem_database': 'uhlive',
-  'col_to_increment': 'B_LOADID',
-  'sql_statement': 'SELECT * FROM semarchy_residents',
-  'primary_key': 'RESIDENTS_ID',
-  'delete_last': False
-  },
+                 {'oracle_table': 'SA_RESIDENTS',  # 15,636
+                  'company': 'TVH',
+                  'hierarchy': 17,
+                  'server': 'TVHA-UH-DB01',
+                  'on_prem_database': 'uhlive',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_residents',
+                  'primary_key': 'RESIDENTS_ID',
+                  'delete_last': False
+                  },
 
- {'oracle_table': 'SA_COMMUNICATION',  # 90,356
-  'hierarchy': 19,
-  'server': 'TVHA-UH-DB01',
-  'on_prem_database': 'uhlive',
-  'col_to_increment': 'B_LOADID',
-  'sql_statement': 'SELECT * FROM semarchy_communication',
-  'primary_key': 'COMMUNICATION_ID',
-  'delete_last': False
-  },
+                 {'oracle_table': 'SA_COMMUNICATION',  # 90,356
+                  'company': 'TVH',
+                  'hierarchy': 19,
+                  'server': 'TVHA-UH-DB01',
+                  'on_prem_database': 'uhlive',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_communication',
+                  'primary_key': 'COMMUNICATION_ID',
+                  'delete_last': False
+                  },
 
- {'oracle_table': 'SA_VULNERABILTY_DETAILS',  # 28,780
-  'hierarchy': 19,
-  'server': 'TVHA-UH-DB01',
-  'on_prem_database': 'uhlive',
-  'col_to_increment': 'B_LOADID',
-  'sql_statement': 'SELECT * FROM semarchy_vulnerabiltyDetails',
-  'primary_key': 'VULNERABILTY_DETAILS_ID',
-  'delete_last': False
-  },
+                 {'oracle_table': 'SA_VULNERABILTY_DETAILS',  # 28,780
+                  'company': 'TVH',
+                  'hierarchy': 19,
+                  'server': 'TVHA-UH-DB01',
+                  'on_prem_database': 'uhlive',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_vulnerabiltyDetails',
+                  'primary_key': 'VULNERABILTY_DETAILS_ID',
+                  'delete_last': False
+                  },
 
- {'oracle_table': 'SA_ECONOMIC_STATUS',  # 28,780
-  'hierarchy': 19,
-  'server': 'TVHA-UH-DB01',
-  'on_prem_database': 'uhlive',
-  'col_to_increment': 'B_LOADID',
-  'sql_statement': 'SELECT * FROM semarchy_economicStatus',
-  'primary_key': 'ECONOMIC_STATUS_ID',
-  'delete_last': False
-  },
+                 {'oracle_table': 'SA_ECONOMIC_STATUS',  # 28,780
+                  'company': 'TVH',
+                  'hierarchy': 19,
+                  'server': 'TVHA-UH-DB01',
+                  'on_prem_database': 'uhlive',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_economicStatus',
+                  'primary_key': 'ECONOMIC_STATUS_ID',
+                  'delete_last': False
+                  },
 
- {'oracle_table': 'SA_CONTACT_PREFRENCES',  # spelling fucking mistake # 28,780
-  'hierarchy': 19,
-  'server': 'TVHA-UH-DB01',
-  'on_prem_database': 'uhlive',
-  'col_to_increment': 'B_LOADID',
-  'sql_statement': 'SELECT * FROM semarchy_contactPreferences',
-  'primary_key': 'CONTACT_PREFRENCES_ID',  # spelling fucking mistake
-  'delete_last': False
-  },
+                 {'oracle_table': 'SA_CONTACT_PREFRENCES',  # spelling fucking mistake # 28,780
+                  'company': 'TVH',
+                  'hierarchy': 19,
+                  'server': 'TVHA-UH-DB01',
+                  'on_prem_database': 'uhlive',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_contactPreferences',
+                  'primary_key': 'CONTACT_PREFRENCES_ID',  # spelling fucking mistake
+                  'delete_last': False
+                  },
 
- {'oracle_table': 'SA_RENT_GRP_REF',  # 9
-  'hierarchy': 15,
-  'server': 'TVHA-UH-DB01',
-  'on_prem_database': 'uhlive',
-  'col_to_increment': 'B_LOADID',
-  'sql_statement': 'SELECT * FROM semarchy_rentGrp',
-  'primary_key': 'RENT_GRP_REF_ID',
-  'delete_last': False
-  },
+                 {'oracle_table': 'SA_RENT_GRP_REF',  # 9
+                  'company': 'TVH',
+                  'hierarchy': 15,
+                  'server': 'TVHA-UH-DB01',
+                  'on_prem_database': 'uhlive',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_rentGrp',
+                  'primary_key': 'RENT_GRP_REF_ID',
+                  'delete_last': False
+                  },
 
- {'oracle_table': 'SA_PERSON',  # 28,
-  'hierarchy': 18,
-  'server': 'TVHA-UH-DB01',
-  'on_prem_database': 'uhlive',
-  'col_to_increment': 'B_LOADID',
-  'sql_statement': 'SELECT * FROM semarchy_person',
-  'primary_key': 'PERSON_ID',
-  'delete_last': False
-  },
+                 {'oracle_table': 'SA_PERSON',  # 28,
+                  'company': 'TVH',
+                  'hierarchy': 18,
+                  'server': 'TVHA-UH-DB01',
+                  'on_prem_database': 'uhlive',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_person',
+                  'primary_key': 'PERSON_ID',
+                  'delete_last': False
+                  },
 
- {'oracle_table': 'SA_PERSON_LOOKUP',  # 278
-  'hierarchy': 16,
-  'server': 'TVHA-UH-DB01',
-  'on_prem_database': 'uhlive',
-  'col_to_increment': 'B_LOADID',
-  'sql_statement': 'SELECT * FROM semarchy_personLookup',
-  'primary_key': 'PERSON_LOOKUP_ID',
-  'delete_last': False
-  },
+                 {'oracle_table': 'SA_PERSON_LOOKUP',  # 278
+                  'company': 'TVH',
+                  'hierarchy': 16,
+                  'server': 'TVHA-UH-DB01',
+                  'on_prem_database': 'uhlive',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_personLookup',
+                  'primary_key': 'PERSON_LOOKUP_ID',
+                  'delete_last': False
+                  },
 
-  # added on 06-Nov-2018
- {'oracle_table': 'SA_ALERT_INFO_LOOKUP',
-  'hierarchy': 20,
-  'server': 'TVHA-UH-DB01',
-  'on_prem_database': 'uhlive',
-  'col_to_increment': 'B_LOADID',
-  'sql_statement': 'SELECT * FROM semarchy_alertInfoLookup',
-  'primary_key': 'ALERT_INFO_LOOKUP_ID',
-  'delete_last': False
-  },
+                  # added on 06-Nov-2018
+                 {'oracle_table': 'SA_ALERT_INFO_LOOKUP',
+                  'company': 'TVH',
+                  'hierarchy': 20,
+                  'server': 'TVHA-UH-DB01',
+                  'on_prem_database': 'uhlive',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_alertInfoLookup',
+                  'primary_key': 'ALERT_INFO_LOOKUP_ID',
+                  'delete_last': False
+                  },
 
- {'oracle_table': 'SA_ALERTS_INFO_MASTER',
-   'hierarchy': 21,
-   'server': 'TVHA-UH-DB01',
-   'on_prem_database': 'uhlive',
-   'col_to_increment': 'B_LOADID',
-   'sql_statement': 'SELECT * FROM semarchy_alertInfoMaster',
-   'primary_key': 'ALERTS_INFO_MASTER_ID',
-   'delete_last': False
-   },
+                 {'oracle_table': 'SA_ALERTS_INFO_MASTER',
+                  'company': 'TVH',
+                   'hierarchy': 21,
+                   'server': 'TVHA-UH-DB01',
+                   'on_prem_database': 'uhlive',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_alertInfoMaster',
+                   'primary_key': 'ALERTS_INFO_MASTER_ID',
+                   'delete_last': False
+                   },
 
 ]

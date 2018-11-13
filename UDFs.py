@@ -1,6 +1,30 @@
-def all_next_words_after_word(my_string, after_this_word='AS', split_string_by=','):
+import datetime
+import sys
+import os
+import logging
 
-    def find_between_helper(s=my_string, w=after_this_word):
+def set_logging(environment: str, path_to_logs: str = None, file_name_time: bool = False) -> None:
+    def path_to_desktop() -> str:  # this func is only called when running on Windows
+        desktop: str = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+        return desktop + '/Logs Semarchy'
+
+    path_to_logs: str = path_to_logs if path_to_logs is not None else path_to_desktop() if "win" in sys.platform else "/opt/semarchy/SemarchyLogs" if "linux" in sys.platform else "foo"
+
+    now_str: str = datetime.datetime.now().strftime("%Y-%m-%d %Hh %Mm %Ss")
+    file_name: str = environment if file_name_time is False else environment + " " + now_str
+    filename: str = path_to_logs + '/' + file_name + '.txt'
+
+    print('saving logs to file:', filename)
+    logging.basicConfig(
+        filename=filename,
+        level=logging.DEBUG,
+        format="%(asctime)s - %(name)s | ThreadID: %(thread)d | %(levelname)s: %(message)s",
+        filemode='w'
+    )
+
+
+def all_next_words_after_word(my_string: str, after_this_word: str='AS', split_string_by: str=',') -> str:
+    def find_between_helper(s: str=my_string, w: str=after_this_word):
         if s.find(w) < 0:  # the word (w) is not in the string (s)
             return None
         else:
@@ -12,7 +36,7 @@ def all_next_words_after_word(my_string, after_this_word='AS', split_string_by='
     final = ', '.join(final)
     return final
 
-def modify_script(old_script, modification):  # a bit overkill (not possible to have more than 1 DISTINCT keywords in reality)
+def modify_script(old_script: str, modification: str) -> str:  # a bit overkill (not possible to have more than 1 DISTINCT keywords in reality)
     """  INSERTS the `modification` at the right place inside the `old_script`
          ex: old_script = SELECT DISTINCT COLUMN_1, COLUMN_2 FROM MY_TABLE
              modification = 99 AS BL_LOADID
@@ -47,7 +71,6 @@ def modify_script(old_script, modification):  # a bit overkill (not possible to 
     new_script = ','.join(contains_DISTINCT) + modification + ',' + ','.join(other_ELEMENTS)
 
     return new_script
-
 
 if __name__ == "__main__":
     sql = """select 456 AS B_LOAD_ID_FAKE,
