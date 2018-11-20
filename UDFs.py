@@ -2,6 +2,7 @@ import datetime
 import sys
 import os
 import logging
+from typing import List
 
 def set_logging(environment: str, path_to_logs: str = None, file_name_time: bool = False) -> None:
     def path_to_desktop() -> str:  # this func is only called when running on Windows
@@ -42,11 +43,9 @@ def modify_script(old_script: str, modification: str) -> str:  # a bit overkill 
              modification = 99 AS BL_LOADID
          => returns: SELECT DISTINCT COLUMN_1, 99 AS BL_LOADID , COLUMN_2 FROM MY_TABLE
     """
-    split_by_comma = old_script.split(',')
-    contains_DISTINCT = [x for x in split_by_comma if 'DISTINCT' in x]
-    other_ELEMENTS = split_by_comma[len(contains_DISTINCT):]; #print('other_ELEMENTS = ', other_ELEMENTS)
-    #print('contains_DISTINCT = ', contains_DISTINCT)
-    #print('other_ELEMENTS = ', other_ELEMENTS)
+    split_by_comma: List[str] = old_script.split(',')
+    contains_DISTINCT: List[str] = [x for x in split_by_comma if 'DISTINCT' in x]
+    other_ELEMENTS: List[str] = split_by_comma[len(contains_DISTINCT):]
 
     if not contains_DISTINCT:  # no `DISTINCT` keyword in the old_script
         after_SELECT = other_ELEMENTS[0].split('SELECT')[1]; #print('after_SELECT = ', after_SELECT)
@@ -55,7 +54,7 @@ def modify_script(old_script: str, modification: str) -> str:  # a bit overkill 
         else:
             new_script = 'SELECT ' + modification.strip() + ',' + after_SELECT + ',' + ','.join(other_ELEMENTS[1:])
         #print("no `DISTINCT` keyword in the old_script")
-        return new_script
+        return replace_star(new_script)
 
     if not other_ELEMENTS:  # all columns are prefixed with `DISTINCT`
         before_FROM = contains_DISTINCT[-1].split('FROM')[0].strip()
@@ -63,14 +62,37 @@ def modify_script(old_script: str, modification: str) -> str:  # a bit overkill 
 
         new_script = ','.join(contains_DISTINCT[:-1]) + ',' + before_FROM + ',' + modification + 'FROM' + after_FROM
         #print("all columns are prefixed with `DISTINCT`")
-        return new_script
+        return replace_star(new_script)
 
     contains_DISTINCT = ['SELECT'] if not contains_DISTINCT else contains_DISTINCT
     modification = (',' if contains_DISTINCT != ['SELECT'] else '') + modification
 
-    new_script = ','.join(contains_DISTINCT) + modification + ',' + ','.join(other_ELEMENTS)
+    new_script: str = ','.join(contains_DISTINCT) + modification + ',' + ','.join(other_ELEMENTS)
+    return replace_star(new_script)
 
-    return new_script
+
+def replace_star(script: str) -> str:
+    """ modifies this: SELECT 1099 AS dbo.B_LOADID, * FROM my_table     # this works for SQL Server, but NOT for Oracle
+        to this: SELECT 1099 AS dbo.B_LOADID, my_table.* FROM my_table  # this works for both
+
+        But if there is something like: SELECT * FROM (...), that is not modified, because 2 words after '*' we have a '('
+    """
+
+    if '*' not in script:  # if there is no '*' in the script, just return the script as it is
+        return script
+
+    sql_script_as_list: List[str] = script.split()
+    star_position_in_sql_script: int = sql_script_as_list.index('*')
+
+    try:
+        two_words_after_star: str = sql_script_as_list[star_position_in_sql_script + 2]
+    except IndexError:  # this should not happen; but if there is an error, just return the script as it is
+        return script
+
+    if two_words_after_star != '(':
+        script = script.replace('*', two_words_after_star + '.*')
+    return script
+
 
 if __name__ == "__main__":
     sql = """select 456 AS B_LOAD_ID_FAKE,
@@ -102,6 +124,6 @@ if __name__ == "__main__":
                         dateadd(month,100,getdate()) AS VALID_TO 
             FROM (...)"""
 
-    # s = 'SELECT * FROM my_table'
-    x = modify_script(s, ' 1099 AS dbo.B_LOADID ')
-    print(x)
+    old_script: str = 'SELECT * FROM my_table'
+    new_script: str = modify_script(old_script=old_script, modification=' 1099 AS dbo.B_LOADID')
+    print(new_script)
