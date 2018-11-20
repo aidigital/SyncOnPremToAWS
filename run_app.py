@@ -40,14 +40,14 @@ if __name__ == "__main__":
     import concurrent.futures
 
     executor = concurrent.futures.ThreadPoolExecutor(max_workers=len(tables_to_update))
-    wait_for = [executor.submit(AWS_Connecter(environment=ENVIRONMENT).insert_to_oracle_specify_columns,
+    wait_for = {executor.submit(AWS_Connecter(environment=ENVIRONMENT).insert_to_oracle_specify_columns,
                                               d['oracle_table'], d['hierarchy'], config['servers'][d['server']], d['on_prem_database'], d['sql_statement'],
                                               d['col_to_increment'], d['primary_key'], d['company'], d['delete_last']
-                                )
+                                ): str(d['hierarchy'])+'_'+d['oracle_table']+'_'+d['on_prem_database']
                                 for d in tables_to_update
                                 if d['company'] in RUN_FOR  # 2 choices: TVH / MTH
                                 if d['oracle_table'] not in ['SA_ALERT_INFO_LOOKUP', 'SA_ALERTS_INFO_MASTER']
-               ]  # these Futures will immediately start getting executed
+                }  # these Futures will immediately start getting executed
     # above, I use AWS_Connecter() which creates a new object each time. However, if using the same object, cursor.executemany() fails to insert data (various errors received) when run in parallel (multiple threads)
     # so essentially, with this approach, each dict in `tables_to_update` creates 1 instance of AWS_Connecter() class, and 1 instance of OnPremise_Connecter() class
 
@@ -55,11 +55,12 @@ if __name__ == "__main__":
 
     import traceback
     for f in concurrent.futures.as_completed(wait_for):
+        table_fail = wait_for[f]
         try:
-            print('{} returned --> {}'.format(f, f.result()))  # .result() blocks until the task Completes (either by returning a value or raising an exception), or is Canceled
+            print('{} {} returned --> {}'.format(table_fail, f, f.result()))  # .result() blocks until the task Completes (either by returning a value or raising an exception), or is Canceled
         except Exception:
-            print('unexpected error: ', traceback.format_exc())
-            logging.info('Unexpected Error:\n{}'.format(traceback.format_exc()))
+            print('--unexpected error with {} future {}: {}'.format(table_fail, f, traceback.format_exc()))
+            logging.info('--unexpected error with {} future {}:\n{}'.format(table_fail, f, traceback.format_exc()))
 
     print('\n', wait_for)  # List of Future Instances, each Instance having `state` = `finished` (+ the result returned or exception raised)
 
