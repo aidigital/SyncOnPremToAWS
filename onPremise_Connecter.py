@@ -5,7 +5,8 @@ import pandas as pd; pd.set_option('display.width', 1000)
 
 from config import config
 
-class OnPremise_Connecter(object):
+class OnPremise_Connecter():
+    """This class can connect only to SQL Server, not to Oracle. Deprecated. Use onPremise_Connecr2.py instead """
     def __init__(self, server, database):
         # super().__init__()
 

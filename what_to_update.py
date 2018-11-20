@@ -585,4 +585,107 @@ tables_to_update = [
                    'delete_last': False
                    },
 
+
+
+
+                  # ================================== MTH Tables ==================================
+                  {'oracle_table': 'SA_BLOCKS',
+                   'company': 'MTH',
+                   'hierarchy': 106,
+                   'server': 'MET-PRD-VM-DB02',
+                   'on_prem_database': 'HOUTEST2',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_blocks',
+                   'primary_key': 'BLOCKS_ID',
+                   'delete_last': False
+                   },
+
+                   {'oracle_table': 'SA_LOCAL_AUTHORITY',
+                    'company': 'MTH',
+                    'hierarchy': 103,
+                    'server': 'MET-PRD-VM-DB02',
+                    'on_prem_database': 'HOUTEST2',
+                    'col_to_increment': 'B_LOADID',
+                    'sql_statement': 'SELECT * FROM semarchy_local_authority',
+                    'primary_key': 'LOCAL_AUTHORITY_ID',
+                    'delete_last': False
+                    },
+
+                  {'oracle_table': 'SA_LOOKUP',
+                   'company': 'MTH',
+                   'hierarchy': 101,
+                  'server': 'MET-PRD-VM-DB02',
+                  'on_prem_database': 'HOUTEST2',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_lookup',
+                  'primary_key': 'LOOKUP_ID',
+                  'delete_last': False
+                  },
+
+                  # {'oracle_table': 'semarchy_patch_lookup',   # WHAT IS THIS TABLE?
+                  #  'company': 'MTH',
+                  #  'hierarchy': xxx,
+                  # 'server': 'MET-PRD-VM-DB02',
+                  # 'on_prem_database': 'HOUTEST2',
+                  # 'col_to_increment': 'B_LOADID',
+                  # 'sql_statement': 'SELECT * FROM semarchy_patch_lookup',
+                  # 'primary_key': 'xxx',
+                  # 'delete_last': False
+                  # },
+
+                  {'oracle_table': 'SA_SCHEMES',
+                   'company': 'MTH',
+                   'hierarchy': 105,
+                  'server': 'MET-PRD-VM-DB02',
+                  'on_prem_database': 'HOUTEST2',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_scheme',
+                  'primary_key': 'SCHEMES_ID',
+                  'delete_last': False
+                  },
+
+                  {'oracle_table': 'SA_STAFF_INVOLVEMENT',
+                   'company': 'MTH',
+                   'hierarchy': 104,
+                  'server': 'MET-PRD-VM-DB02',
+                  'on_prem_database': 'HOUTEST2',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_staff',
+                  'primary_key': 'STAFF_INVOLVEMENT_ID',
+                  'delete_last': False
+                  },
+
+                  # {'oracle_table': '<semarchy_subblocks>',  # WHAT IS THIS TABLE?
+                  #  'company': 'MTH',
+                  #  'hierarchy': xxx,
+                  # 'server': 'MET-PRD-VM-DB02',
+                  # 'on_prem_database': 'HOUTEST2',
+                  # 'col_to_increment': 'B_LOADID',
+                  # 'sql_statement': 'SELECT * FROM semarchy_subblocks',
+                  # 'primary_key': 'xxx',
+                  # 'delete_last': False
+                  # },
+
+                  {'oracle_table': 'SA_TENURE_TYPE',
+                   'company': 'MTH',
+                   'hierarchy': 102,
+                  'server': 'MET-PRD-VM-DB02',
+                  'on_prem_database': 'HOUTEST2',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_tenure_types',
+                  'primary_key': 'TENURE_TYPE_ID',
+                  'delete_last': False
+                  },
+
+                  {'oracle_table': 'SA_UNITS',
+                   'company': 'MTH',
+                   'hierarchy': 107,
+                  'server': 'MET-PRD-VM-DB02',
+                  'on_prem_database': 'HOUTEST2',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_units',
+                  'primary_key': 'UNITS_ID',
+                  'delete_last': False
+                  },
+
 ]

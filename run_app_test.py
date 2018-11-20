@@ -2,13 +2,15 @@ import logging
 from typing import Dict, List, Any
 from time import sleep
 
-from AWS_Connecter import AWS_Connecter
+from AWS_Connecter import AWS_Connecter  # AWS_Connecter class uses onPremise_Connecter2 via composition
 from what_to_update import tables_to_update
 from config import config
 from UDFs import set_logging
 
 if __name__ == "__main__":
     ENVIRONMENT = 'Dev'   # the only possible values are: 'Dev' / 'Prod'
+    RUN_FOR = ['TVH']  # the only possible values are: 'TVH' / 'MTH'; the TVH On-Prem VM can only connect to 'TVH'
+
     set_logging(environment=ENVIRONMENT, file_name_time=True)  # just provide the path_to_logs if you want to save them somewhere else
 
     # ----------------- METHOD 1 -----------------
@@ -39,13 +41,13 @@ if __name__ == "__main__":
 
     executor = concurrent.futures.ThreadPoolExecutor(max_workers=len(tables_to_update))
     wait_for = [executor.submit(AWS_Connecter(environment=ENVIRONMENT).insert_to_oracle_specify_columns,
-                                              d['oracle_table'], d['hierarchy'], config['servers'][d['server']], d['on_prem_database'], d['sql_statement'], d['col_to_increment'], d['primary_key'], d['delete_last']
+                                              d['oracle_table'], d['hierarchy'], config['servers'][d['server']], d['on_prem_database'], d['sql_statement'],
+                                              d['col_to_increment'], d['primary_key'], d['company'], d['delete_last']
                                 )
                                 for d in tables_to_update
+                                if d['company'] in RUN_FOR  # 2 choices: TVH / MTH
                                 #if d['oracle_table'] in ['SA_ALERT_INFO_LOOKUP', 'SA_ALERTS_INFO_MASTER']
-                                # if d['oracle_table'] not in ['SA_RESIDENTS', 'SA_COMMUNICATION', 'SA_VULNERABILTY_DETAILS', 'SA_ECONOMIC_STATUS', 'SA_CONTACT_PREFRENCES', 'SA_RENT_GRP_REF', 'SA_PERSON', 'SA_PERSON_LOOKUP']
-                                #if d['oracle_table'] in ['SA_ECONOMIC_STATUS', 'SA_CONTACT_PREFRENCES', 'SA_COMMUNICATION', 'SA_VULNERABILTY_DETAILS']
-               ] # these will immediately start getting executed
+               ]  # these Futures will immediately start getting executed
     # above, I use AWS_Connecter() which creates a new object each time. However, if using the same object, cursor.executemany() fails to insert data (various errors received) when run in parallel (multiple threads)
     # so essentially, with this approach, each dict in `tables_to_update` creates 1 instance of AWS_Connecter() class, and 1 instance of OnPremise_Connecter() class
 
