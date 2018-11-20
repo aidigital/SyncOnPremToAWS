@@ -112,8 +112,10 @@ if __name__ == "__main__":
 
     for view in VIEWS:
          #result = onPremise.fetch_to_pandas(sql_statement = 'SELECT count(*) FROM semarchy_blocks FETCH FIRST 10 ROWS ONLY')
-         df: DataFrame = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) FROM {}'.format(view))
-         print('{} -> {} {}'.format(view, df.iloc[0,0], df.columns.values))  # df.iloc[0,0] = value in column 1, row 1
+         # df: DataFrame = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) FROM {}'.format(view))
+         # print('{} -> {} {}'.format(view, df.iloc[0,0], df.columns.values))  # df.iloc[0,0] = value in column 1, row 1
+         df: DataFrame = onPremise.fetch_to_pandas(sql_statement='SELECT * FROM {}'.format(view))
+         print(f'{view}: {df.shape[0]} rows | {df.shape[1]} columns: {df.columns.values}\n')
 
 
     #print('successful connection to On-Prem')
