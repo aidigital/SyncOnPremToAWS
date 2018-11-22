@@ -14,24 +14,23 @@ from onPremise_Connecter2 import OnPremise_Connecter2
 i = -1
 
 class AWS_Connecter():
-    def __init__(self, environment: str, host=None, user=None, password=None) -> None:
+    def __init__(self, environment: str, host: str=None, user: str=None, password: str=None) -> None:
         """AWS_Connecter class calls OnPremise_Connecter2 class directly"""
-        self.environment = environment  # this should be passed as one of 2 values: 'Dev' / 'Prod'
-        self.machine_running_script = config['Identifier']['machine_running_script']  # this is to distinguish between running from on the AWS EC2, or the TVHA VN On-Prem
+        self.environment: str = environment  # this should be passed as one of 2 values: 'Dev' / 'Prod'
+        self.machine_running_script: str = config['Identifier']['machine_running_script']  # this is to distinguish between running from on the AWS EC2, or the TVHA VN On-Prem
 
         # Dynamically determine the credentials based on environment
-        self.host = host if host != None else config['AWS-Dev']['host'] if self.environment == 'Dev' else config['AWS-Prod']['host'] if self.environment == 'Prod' else 'idiot'
-        self.user = user if user != None else config['AWS-Dev']['user'] if self.environment == 'Dev' else config['AWS-Prod']['user'] if self.environment == 'Prod' else 'idiot'
-        self.password = password if password != None else config['AWS-Dev']['password'] if self.environment == 'Dev' else config['AWS-Prod']['password'] if self.environment == 'Prod' else 'idiot'
+        self.host: str = host if host != None else config['AWS-Dev']['host'] if self.environment == 'Dev' else config['AWS-Prod']['host'] if self.environment == 'Prod' else 'idiot'
+        self.user: str = user if user != None else config['AWS-Dev']['user'] if self.environment == 'Dev' else config['AWS-Prod']['user'] if self.environment == 'Prod' else 'idiot'
+        self.password: str = password if password != None else config['AWS-Dev']['password'] if self.environment == 'Dev' else config['AWS-Prod']['password'] if self.environment == 'Prod' else 'idiot'
 
-        self.port = config['AWS-Dev']['port'] if self.environment == 'Dev' else config['AWS-Prod']['port'] if self.environment == 'Prod' else 'idiot'
-        self.sid = config['AWS-Dev']['sid'] if self.environment == 'Dev' else config['AWS-Prod']['sid'] if self.environment == 'Prod' else 'idiot'
+        self.port: int = config['AWS-Dev']['port'] if self.environment == 'Dev' else config['AWS-Prod']['port'] if self.environment == 'Prod' else 'idiot'
+        self.sid: str = config['AWS-Dev']['sid'] if self.environment == 'Dev' else config['AWS-Prod']['sid'] if self.environment == 'Prod' else 'idiot'
 
         # the 2 functions MTA_GET_NEW_LOADID (which gives the LOAD_ID that we need to use) & MTA_SUBMIT_LOAD (which pushes SA to GD) are taken from here
-        self.SemarchyFunctions_host = config['SemarchyFunctions-Dev']['host'] if self.environment == 'Dev' else config['SemarchyFunctions-Prod']['host'] if self.environment == 'Prod' else 'idiot'
-        self.SemarchyFunctions_user = config['SemarchyFunctions-Dev']['user'] if self.environment == 'Dev' else config['SemarchyFunctions-Prod']['user'] if self.environment == 'Prod' else 'idiot'
-        self.SemarchyFunctions_password = config['SemarchyFunctions-Dev']['password'] if self.environment == 'Dev' else config['SemarchyFunctions-Prod']['password'] if self.environment == 'Prod' else 'idiot'
-
+        self.SemarchyFunctions_host: str = config['SemarchyFunctions-Dev']['host'] if self.environment == 'Dev' else config['SemarchyFunctions-Prod']['host'] if self.environment == 'Prod' else 'idiot'
+        self.SemarchyFunctions_user: str = config['SemarchyFunctions-Dev']['user'] if self.environment == 'Dev' else config['SemarchyFunctions-Prod']['user'] if self.environment == 'Prod' else 'idiot'
+        self.SemarchyFunctions_password: str = config['SemarchyFunctions-Dev']['password'] if self.environment == 'Dev' else config['SemarchyFunctions-Prod']['password'] if self.environment == 'Prod' else 'idiot'
 
         self.SID = cx_Oracle.makedsn(self.host, self.port, sid=self.sid)
         connection_string: str = 'oracle://{user}:{password}@{sid}'.format(user=self.user, password=self.password, sid=self.SID)
@@ -41,7 +40,6 @@ class AWS_Connecter():
         # used for inserting
         self.connection = cx_Oracle.Connection("{}/{}@{}".format(self.user, self.password, self.SID))
         self.cursor = cx_Oracle.Cursor(self.connection)
-
 
         logging.info('Instantiated: {}'.format(__class__.__name__))
 
