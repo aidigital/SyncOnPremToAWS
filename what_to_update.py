@@ -689,3 +689,12 @@ tables_to_update = [
                   },
 
 ]
+
+if __name__ == "__main__":
+    from typing import List, Dict, Union
+    TVH_tables: List[Dict[str, Union[str, int, bool]]] = [d for d in tables_to_update if d['company'] == 'TVH']
+    MTH_tables: List[Dict[str, Union[str, int, bool]]] = [d for d in tables_to_update if d['company'] == 'MTH']
+
+    print('Total tables:', len(tables_to_update))
+    print('TVH tables:', len(TVH_tables))
+    print('MTH tables:', len(MTH_tables))
