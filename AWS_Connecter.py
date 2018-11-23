@@ -172,6 +172,7 @@ class AWS_Connecter():
         #logger.info(f'{fct_name} called with params = {fct_params}')
         return run_fct
 
+    # this could be a normal func (or a @staticmethod)
     def _sql_query_to_get_Oracle_latest_HASH_VALUES(self, oracle_table: str, primary_key: str, col_to_increment: str) -> str:
         sql_script_text: str = """SELECT main.{PRIMARY_KEY}, main.{col_to_increment}, main.HASH_VALUE as LATEST_HASH_VALUE
                FROM
@@ -246,7 +247,7 @@ class AWS_Connecter():
         #print("oracle_latest_HASH_VALUE:")
         #print(oracle_latest_HASH_VALUE)
 
-        oracle_list_of_HASH_VALUES = oracle_latest_HASH_VALUE['latest_hash_value'].tolist()
+        oracle_list_of_HASH_VALUES: List = oracle_latest_HASH_VALUE['latest_hash_value'].tolist()  # might be faster if this was a Set, instead of List
         #print('oracle_list_of_HASH_VALUES = ', oracle_list_of_HASH_VALUES)
 
 
@@ -257,7 +258,7 @@ class AWS_Connecter():
             insert_this['HASH_VALUE'] = insert_this['HASH_VALUE'].astype('str')
 
         # Drop the rows that have the same HASH_VALUE as in the Oracle table (exit if nothing to insert)
-        insert_this= insert_this[~insert_this['HASH_VALUE'].isin(oracle_list_of_HASH_VALUES)]
+        insert_this = insert_this[~insert_this['HASH_VALUE'].isin(oracle_list_of_HASH_VALUES)]
         #print(insert_this)
 
         if len(insert_this) == 0:  # if all the HASH_VALUES we got from On-Prem matched the latest ones from Oracle, then there's nothing to insert, so return
