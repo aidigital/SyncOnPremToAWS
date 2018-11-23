@@ -54,16 +54,18 @@ if __name__ == "__main__":
     print("futures:", wait_for)  # List of Future Instances, each Instance having `state` = `running`
 
     import traceback
+    nr_errors = 0
     for f in concurrent.futures.as_completed(wait_for):
         table_fail = wait_for[f]
         try:
-            print('{} {} returned --> {}'.format(table_fail, f, f.result()))  # .result() blocks until the task Completes (either by returning a value or raising an exception), or is Canceled
+            print('{} {} returned --> {}'.format(table_fail, f, f.result()))  # .result() blocks until the task Completes (either by returning a value or raising an exception), or is Canceled; but in our case, it's already completed (so it doesn't block)
         except Exception:
             print('--unexpected error with {} future {}: {}'.format(table_fail, f, traceback.format_exc()))
             logging.info('--unexpected error with {} future {}:\n{}'.format(table_fail, f, traceback.format_exc()))
+            nr_errors += 1
 
     print('\n', wait_for)  # List of Future Instances, each Instance having `state` = `finished` (+ the result returned or exception raised)
-
+    logging.info(f'>>> Nr of tables with errors while pushing data to SA tables: {nr_errors}/{len(wait_for)}')
     executor.shutdown()
 
 
