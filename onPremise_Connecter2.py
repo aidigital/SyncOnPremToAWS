@@ -9,19 +9,18 @@ from typing import Any, List, Tuple
 from config import config
 
 class OnPremise_Connecter2():
-    """ This class connects both to SQL Server & Oracle, because it needs from both MTH and MTH On-Prem DBs"""
-    def __init__(self, server, database, company='MTH') -> None:
+    """ This class connects both to SQL Server & Oracle, because it needs to read from both TVH & MTH On-Prem DBs"""
+    def __init__(self, server, database, company='MTH Test') -> None:
 
         # Credentials
         self.server = server
         self.database = database
-
-        self.user = config['On-Premise']['user'] if company == 'TVH' else config['On-Premise-MTH']['user']
-        self.password = config['On-Premise']['password'] if company == 'TVH' else config['On-Premise-MTH']['password']
-        self.port = config['On-Premise']['port'] if company == 'TVH' else config['On-Premise-MTH']['port']
-
         self.driver = 'ODBC+Driver+13+for+SQL+Server'
-        self.host = config['servers']['MET-PRD-VM-DB02']
+
+        self.user = config['On-Premise']['user'] if company == 'TVH' else config['On-Premise-MTH']['user'] if company == 'MTH Test' else config['On-Premise-MTH-Live']['user']
+        self.password = config['On-Premise']['password'] if company == 'TVH' else config['On-Premise-MTH']['password'] if company == 'MTH Test' else config['On-Premise-MTH-Live']['password']
+        self.port = config['On-Premise']['port'] if company == 'TVH' else config['On-Premise-MTH']['port'] if company == 'MTH Test' else config['On-Premise-MTH-Live']['port']
+        self.host = config['servers']['MET-PRD-VM-DB02'] if company == 'MTH Test' else config['servers']['MET-PRD-VM-DB01']
 
         # Logic for connecting to SQL Server:
         def _connect_to_SQL_Server() -> None:

@@ -9,7 +9,7 @@ from UDFs import set_logging
 
 if __name__ == "__main__":
     ENVIRONMENT = 'Prod'  # the only possible values are: 'Dev' / 'Prod'
-    RUN_FOR = ['TVH']  # the only possible values are: 'TVH' / 'MTH'; the TVH On-Prem VM can only connect to 'TVH'
+    RUN_FOR = ['TVH', 'MTH Test', 'MTH Live']  # the only possible values are: 'TVH' / 'MTH Test' / 'MTH Live' ; the TVH On-Prem VM can only connect to 'TVH'
 
     set_logging(environment=ENVIRONMENT, file_name_time=True)  # just provide the path_to_logs if you want to save them somewhere else
 
@@ -46,7 +46,7 @@ if __name__ == "__main__":
                                 ): str(d['hierarchy'])+'_'+d['oracle_table']+'_'+d['on_prem_database']
                                 for d in tables_to_update
                                 if d['company'] in RUN_FOR  # 2 choices: TVH / MTH
-                                if d['oracle_table'] not in ['SA_ALERT_INFO_LOOKUP', 'SA_ALERTS_INFO_MASTER']
+                                #if d['oracle_table'] not in ['SA_ALERT_INFO_LOOKUP', 'SA_ALERTS_INFO_MASTER']
                 }  # these Futures will immediately start getting executed
     # above, I use AWS_Connecter() which creates a new object each time. However, if using the same object, cursor.executemany() fails to insert data (various errors received) when run in parallel (multiple threads)
     # so essentially, with this approach, each dict in `tables_to_update` creates 1 instance of AWS_Connecter() class, and 1 instance of OnPremise_Connecter() class

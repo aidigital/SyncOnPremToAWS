@@ -91,6 +91,7 @@ class OnPremise_Connecter():
         print('TABLES:\n', inspector.get_table_names())
         print('\nVIEWS:\n', inspector.get_view_names())  # doesn't work, fix it!
 
+
 if __name__ == "__main__":
     onPremise = OnPremise_Connecter(server=config['servers']['TVHA-UH-DB03'], database='clearview')
     x = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) from Elysium')

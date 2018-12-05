@@ -586,11 +586,9 @@ tables_to_update = [
                    },
 
 
-
-
-                  # ================================== MTH Tables ==================================
+                  # ================================== MTH Tables TEST ================================== #
                   {'oracle_table': 'SA_BLOCKS',
-                   'company': 'MTH',
+                   'company': 'MTH Test',
                    'hierarchy': 107,
                    'server': 'MET-PRD-VM-DB02',
                    'on_prem_database': 'HOUTEST2',
@@ -601,7 +599,7 @@ tables_to_update = [
                    },
 
                    {'oracle_table': 'SA_LOCAL_AUTHORITY',
-                    'company': 'MTH',
+                    'company': 'MTH Test',
                     'hierarchy': 104,
                     'server': 'MET-PRD-VM-DB02',
                     'on_prem_database': 'HOUTEST2',
@@ -612,7 +610,7 @@ tables_to_update = [
                     },
 
                   {'oracle_table': 'SA_LOOKUP',
-                   'company': 'MTH',
+                   'company': 'MTH Test',
                    'hierarchy': 101,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST2',
@@ -623,7 +621,7 @@ tables_to_update = [
                   },
 
                   {'oracle_table': 'SA_PATCH_LOOKUP',
-                   'company': 'MTH',
+                   'company': 'MTH Test',
                    'hierarchy': 102,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST2',
@@ -634,7 +632,7 @@ tables_to_update = [
                   },
 
                   {'oracle_table': 'SA_SCHEMES',
-                   'company': 'MTH',
+                   'company': 'MTH Test',
                    'hierarchy': 106,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST2',
@@ -645,7 +643,7 @@ tables_to_update = [
                   },
 
                   {'oracle_table': 'SA_STAFF_INVOLVEMENT',
-                   'company': 'MTH',
+                   'company': 'MTH Test',
                    'hierarchy': 105,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST2',
@@ -656,7 +654,7 @@ tables_to_update = [
                   },
 
                   {'oracle_table': 'SA_SUB_BLOCKS',
-                   'company': 'MTH',
+                   'company': 'MTH Test',
                    'hierarchy': 109,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST2',
@@ -667,7 +665,7 @@ tables_to_update = [
                   },
 
                   {'oracle_table': 'SA_TENURE_TYPE',
-                   'company': 'MTH',
+                   'company': 'MTH Test',
                    'hierarchy': 103,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST2',
@@ -678,7 +676,7 @@ tables_to_update = [
                   },
 
                   {'oracle_table': 'SA_UNITS',
-                   'company': 'MTH',
+                   'company': 'MTH Test',
                    'hierarchy': 108,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST2',
@@ -688,12 +686,116 @@ tables_to_update = [
                   'delete_last': False
                   },
 
-]
+                # ================================== MTH Tables LIVE ================================== #
+                  {'oracle_table': 'SA_BLOCKS',
+                   'company': 'MTH Live',
+                   'hierarchy': 207,
+                   'server': 'MET-PRD-VM-DB01',
+                   'on_prem_database': 'HOULIVE',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_blocks',
+                   'primary_key': 'BLOCKS_ID',
+                   'delete_last': False
+                   },
+
+                  {'oracle_table': 'SA_LOCAL_AUTHORITY',
+                   'company': 'MTH Live',
+                   'hierarchy': 204,
+                   'server': 'MET-PRD-VM-DB01',
+                   'on_prem_database': 'HOULIVE',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_local_authority',
+                   'primary_key': 'LOCAL_AUTHORITY_ID',
+                   'delete_last': False
+                   },
+
+                  {'oracle_table': 'SA_LOOKUP',
+                   'company': 'MTH Live',
+                   'hierarchy': 201,
+                   'server': 'MET-PRD-VM-DB01',
+                   'on_prem_database': 'HOULIVE',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_lookup',
+                   'primary_key': 'LOOKUP_ID',
+                   'delete_last': False
+                   },
+
+                  {'oracle_table': 'SA_PATCH_LOOKUP',
+                   'company': 'MTH Live',
+                   'hierarchy': 202,
+                   'server': 'MET-PRD-VM-DB01',
+                   'on_prem_database': 'HOULIVE',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_patch_lookup',
+                   'primary_key': 'PATCH_LOOKUP_ID',
+                   'delete_last': False
+                   },
+
+                  {'oracle_table': 'SA_SCHEMES',
+                   'company': 'MTH Live',
+                   'hierarchy': 206,
+                   'server': 'MET-PRD-VM-DB01',
+                   'on_prem_database': 'HOULIVE',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_scheme',
+                   'primary_key': 'SCHEMES_ID',
+                   'delete_last': False
+                   },
+
+                  {'oracle_table': 'SA_STAFF_INVOLVEMENT',
+                   'company': 'MTH Live',
+                   'hierarchy': 205,
+                   'server': 'MET-PRD-VM-DB01',
+                   'on_prem_database': 'HOULIVE',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_staff',
+                   'primary_key': 'STAFF_INVOLVEMENT_ID',
+                   'delete_last': False
+                   },
+
+                  {'oracle_table': 'SA_SUB_BLOCKS',
+                   'company': 'MTH Live',
+                   'hierarchy': 209,
+                   'server': 'MET-PRD-VM-DB01',
+                   'on_prem_database': 'HOULIVE',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_subblocks',
+                   'primary_key': 'SUB_BLOCKS_ID',
+                   'delete_last': False
+                   },
+
+                  {'oracle_table': 'SA_TENURE_TYPE',
+                   'company': 'MTH Live',
+                   'hierarchy': 203,
+                   'server': 'MET-PRD-VM-DB01',
+                   'on_prem_database': 'HOULIVE',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_tenure_types',
+                   'primary_key': 'TENURE_TYPE_ID',
+                   'delete_last': False
+                   },
+
+                  {'oracle_table': 'SA_UNITS',
+                   'company': 'MTH Live',
+                   'hierarchy': 208,
+                   'server': 'MET-PRD-VM-DB01',
+                   'on_prem_database': 'HOULIVE',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_units',
+                   'primary_key': 'UNITS_ID',
+                   'delete_last': False
+                   },
+              ]
+
+
+# REGEX - change hierachies from 1xx to 2xx
+# replace: 'hierarchy': 1(\d\d)
+# with:    'hierarchy': 2\1
 
 if __name__ == "__main__":
     from typing import List, Dict, Union
     TVH_tables: List[Dict[str, Union[str, int, bool]]] = [d for d in tables_to_update if d['company'] == 'TVH']
-    MTH_tables: List[Dict[str, Union[str, int, bool]]] = [d for d in tables_to_update if d['company'] == 'MTH']
+    MTH_tables: List[Dict[str, Union[str, int, bool]]] = [d for d in tables_to_update if d['company'] in ['MTH Test', 'MTH Live']]
 
     print('Total tables:', len(tables_to_update))
     print('TVH tables:', len(TVH_tables))
