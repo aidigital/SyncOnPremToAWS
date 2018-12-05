@@ -35,7 +35,7 @@ class OnPremise_Connecter2():
 
         if company == 'TVH':
             _connect_to_SQL_Server()
-        elif company == 'MTH':
+        elif company in ['MTH Test', 'MTH Live']:
             _connect_to_Oracle()
         else:
             print("On-Prem did not try to connect to anything!")
