@@ -792,6 +792,9 @@ tables_to_update = [
 # replace: 'hierarchy': 1(\d\d)
 # with:    'hierarchy': 2\1
 
+# To quickly update the project in GitHub, run the following in the Shell, while being in the 'Semarchy' project:
+# git add --all && git commit -m "nothing major" && git push
+
 if __name__ == "__main__":
     from typing import List, Dict, Union
     TVH_tables: List[Dict[str, Union[str, int, bool]]] = [d for d in tables_to_update if d['company'] == 'TVH']
