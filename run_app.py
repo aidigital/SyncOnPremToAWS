@@ -83,11 +83,11 @@ if __name__ == "__main__":
     password = config['SemarchyFunctions-Dev']['password'] if ENVIRONMENT == 'Dev' else config['SemarchyFunctions-Prod']['password'] if ENVIRONMENT == 'Prod' else 'idiot'
     runJobs = AWS_Connecter(environment=ENVIRONMENT, host=host, user=user, password=password)
 
-    for func in SA_to_GD_functions_sorted:
+    for i, func in enumerate(SA_to_GD_functions_sorted, 1):
         runJobs.run_oracle_function(instance=runJobs, fct_name=func[2], fct_params=[func[1], func[3], func[4]])  # ex: fct_params = [auto_increment, 'INTEGRATE_HOUSING', 'adrian_iordache']
         sleep(2)
-        print(f'MTA_SUBMIT_LOAD(id= {func[1]}) for table {func[5]} (priority: {func[0]}) has been sent to Semarchy')
-        logging.info(f'MTA_SUBMIT_LOAD(id= {func[1]}) for table {func[5]} (priority: {func[0]}) has been sent to Semarchy')
+        print(f'{i}. MTA_SUBMIT_LOAD(id= {func[1]}) for table {func[5]} (priority: {func[0]}) has been sent to Semarchy')
+        logging.info(f'{i}. MTA_SUBMIT_LOAD(id= {func[1]}) for table {func[5]} (priority: {func[0]}) has been sent to Semarchy')
 
 
 

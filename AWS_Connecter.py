@@ -298,6 +298,17 @@ if __name__ == "__main__":
     #AWS.execute_sql(sql_statement='SELECT COUNT(*) FROM SA_RESIDENTS')  # smoke test
     #print('successful connection to AWS Oracle')
 
+    AWS.execute_sql(sql_statement='DELETE FROM SA_LOOKUP')
+    AWS.execute_sql(sql_statement='DELETE FROM SA_PATCH_LOOKUP')
+    AWS.execute_sql(sql_statement='DELETE FROM SA_TENURE_TYPE')
+    AWS.execute_sql(sql_statement='DELETE FROM SA_LOCAL_AUTHORITY')
+    AWS.execute_sql(sql_statement='DELETE FROM SA_STAFF_INVOLVEMENT')
+    AWS.execute_sql(sql_statement='DELETE FROM SA_SCHEMES')
+    AWS.execute_sql(sql_statement='DELETE FROM SA_BLOCKS')
+    AWS.execute_sql(sql_statement='DELETE FROM SA_SUB_BLOCKS')
+    AWS.execute_sql(sql_statement='DELETE FROM SA_UNITS')  # this deletes only the data
+
+
     #AWS.execute_sql(sql_statement='DELETE FROM SA_RESIDENTS')
     #AWS.execute_sql(sql_statement='DELETE FROM SA_PERSON')
 
@@ -316,22 +327,10 @@ if __name__ == "__main__":
     # AWS.execute_sql(sql_statement='DELETE FROM GD_COMMUNICATION')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_ECONOMIC_STATUS')
     # AWS.execute_sql(sql_statement='DELETE FROM GD_VULNERABILTY_DETAILS')
-    #
-    #
     # #AWS.execute_sql(sql_statement='DROP TABLE Dummy_Table PURGE')  # this deletes the table completely
-    # AWS.execute_sql(sql_statement='DELETE FROM SA_UNITS')  # this deletes only the data
-    # AWS.execute_sql(sql_statement='DELETE FROM SA_SCHEMES')
-    # AWS.execute_sql(sql_statement='DELETE FROM SA_BLOCKS')
-    #
+
     # AWS.execute_sql(sql_statement='DELETE FROM SA_ESTATE_INSP_AND_CLEANING')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_PROPERTY_TYPE')
-    #
-    #
-    # AWS.execute_sql(sql_statement='DELETE FROM SA_LOOKUP')
-    # AWS.execute_sql(sql_statement='DELETE FROM SA_LOCAL_AUTHORITY')
-    # AWS.execute_sql(sql_statement='DELETE FROM SA_TENURE_TYPE')
-    #
-    # AWS.execute_sql(sql_statement='DELETE FROM SA_STAFF_INVOLVEMENT')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_UNIT_CLUSTER')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_PROPERTY_ATTRIBUTES')
     #
