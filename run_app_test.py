@@ -51,7 +51,7 @@ if __name__ == "__main__":
     # above, I use AWS_Connecter() which creates a new object each time. However, if using the same object, cursor.executemany() fails to insert data (various errors received) when run in parallel (multiple threads)
     # so essentially, with this approach, each dict in `tables_to_update` creates 1 instance of AWS_Connecter() class, and 1 instance of OnPremise_Connecter() class
 
-    print("futures:", wait_for)  # List of Future Instances, each Instance having `state` = `running`
+    print("\nfutures:", wait_for, "\n")  # List of Future Instances, each Instance having `state` = `running`
 
     import traceback
     nr_errors = 0
@@ -65,6 +65,7 @@ if __name__ == "__main__":
             nr_errors += 1
 
     print('\n', wait_for)  # List of Future Instances, each Instance having `state` = `finished` (+ the result returned or exception raised)
+    print(f'\n>>> Nr of tables with errors while pushing data to SA tables: {nr_errors}/{len(wait_for)}')
     logging.info(f'>>> Nr of tables with errors while pushing data to SA tables: {nr_errors}/{len(wait_for)}')
     executor.shutdown()
 
@@ -73,8 +74,8 @@ if __name__ == "__main__":
     SA_to_GD_functions: Dict = Borg().__dict__  # SA_to_GD funcs were written here by insert_to_oracle_specify_columns()
     SA_to_GD_functions_sorted: List[List] = sort_values_of_dict(SA_to_GD_functions)
 
-    print("SA_to_GD_functions:", SA_to_GD_functions)
-    print("SA_to_GD_functions_sorted:", SA_to_GD_functions_sorted)
+    print("\nSA_to_GD_functions:", SA_to_GD_functions, '\n')
+    print("SA_to_GD_functions_sorted:", SA_to_GD_functions_sorted, '\n')
 
     # connect to the database that can run the SA_to_GD function, and send all of them, with 1 sec pause in between
     host = config['SemarchyFunctions-Dev']['host'] if ENVIRONMENT == 'Dev' else config['SemarchyFunctions-Prod']['host'] if ENVIRONMENT == 'Prod' else 'idiot'
