@@ -38,9 +38,9 @@ class OnPremise_Connecter2():
         elif company in ['MTH Test', 'MTH Live']:
             _connect_to_Oracle()
         else:
-            print("On-Prem did not try to connect to anything!")
+            print(f'you have provided company={company}. That is wrong, it needs to be one of these 3: "TVH", "MTH Test", "MTH Live"')
 
-        logging.info('Instantiated: {} for {} db from {}'.format(__class__.__name__, database, company))
+        logging.info(f'Instantiated: {__class__.__name__} for {database} db from {company}')
 
 
     def execute_sql(self, sql_statement: str) -> Any:
@@ -103,11 +103,11 @@ if __name__ == "__main__":
     # onPremise = OnPremise_Connecter(server=config['servers']['TVHA-UH-DB03'], database='clearview', company='TVH')
     # x = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) from Elysium')
 
-    onPremise = OnPremise_Connecter2(server=config['servers']['MET-PRD-VM-DB02'], database=config['On-Premise-MTH']['db'], company='MTH')
+    onPremise = OnPremise_Connecter2(server=config['servers']['MET-PRD-VM-DB01'], database=config['On-Premise-MTH-Live']['db'], company='MTH Live')
     #x = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) from tvh_sa_communication_test')
 
-    VIEWS = ['semarchy_blocks', 'semarchy_local_authority', 'semarchy_lookup', 'semarchy_patch_lookup', 'semarchy_scheme',
-            'semarchy_staff', 'semarchy_subblocks', 'semarchy_tenure_types', 'semarchy_units']
+    VIEWS = ['semarchy_blocks', 'semarchy_local_authority', 'semarchy_lookup', 'semarchy_patch_lookup',
+             'semarchy_scheme', 'semarchy_staff', 'semarchy_subblocks', 'semarchy_tenure_types', 'semarchy_units']
 
     for view in VIEWS:
          #result = onPremise.fetch_to_pandas(sql_statement = 'SELECT count(*) FROM semarchy_blocks FETCH FIRST 10 ROWS ONLY')

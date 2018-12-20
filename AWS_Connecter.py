@@ -298,9 +298,10 @@ if __name__ == "__main__":
     #AWS.execute_sql(sql_statement='SELECT COUNT(*) FROM SA_RESIDENTS')  # smoke test
     #print('successful connection to AWS Oracle')
 
-    # AWS.execute_sql(sql_statement='DELETE FROM SA_RESIDENTS')
+    #AWS.execute_sql(sql_statement='DELETE FROM SA_RESIDENTS')
+    #AWS.execute_sql(sql_statement='DELETE FROM SA_PERSON')
+
     # AWS.execute_sql(sql_statement='DELETE FROM SA_RENT_GRP_REF')
-    # AWS.execute_sql(sql_statement='DELETE FROM SA_PERSON')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_PERSON_LOOKUP')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_CONTACT_PREFRENCES')
     # AWS.execute_sql(sql_statement='DELETE FROM SA_COMMUNICATION')

@@ -795,8 +795,11 @@ tables_to_update = [
 if __name__ == "__main__":
     from typing import List, Dict, Union
     TVH_tables: List[Dict[str, Union[str, int, bool]]] = [d for d in tables_to_update if d['company'] == 'TVH']
-    MTH_tables: List[Dict[str, Union[str, int, bool]]] = [d for d in tables_to_update if d['company'] in ['MTH Test', 'MTH Live']]
+    MTH_Test_tables: List[Dict[str, Union[str, int, bool]]] = [d for d in tables_to_update if d['company'] == 'MTH Test']
+    MTH_Live_tables: List[Dict[str, Union[str, int, bool]]] = [d for d in tables_to_update if d['company'] == 'MTH Live']
 
     print('Total tables:', len(tables_to_update))
+
     print('TVH tables:', len(TVH_tables))
-    print('MTH tables:', len(MTH_tables))
+    print('MTH Test tables:', len(MTH_Test_tables))
+    print('MTH Live tables:', len(MTH_Live_tables))
