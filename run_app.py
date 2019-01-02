@@ -46,6 +46,7 @@ if __name__ == "__main__":
                                 ): str(d['hierarchy'])+'_'+d['oracle_table']+'_'+d['on_prem_database']
                                 for d in tables_to_update
                                 if d['company'] in RUN_FOR  # 2 choices: TVH / MTH
+                                if d['on_prem_database'] not in ['Fizzy']
                                 #if d['oracle_table'] not in ['SA_ALERT_INFO_LOOKUP', 'SA_ALERTS_INFO_MASTER']
                 }  # these Futures will immediately start getting executed
     # above, I use AWS_Connecter() which creates a new object each time. However, if using the same object, cursor.executemany() fails to insert data (various errors received) when run in parallel (multiple threads)

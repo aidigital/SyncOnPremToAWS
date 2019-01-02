@@ -11,127 +11,127 @@ Rules for writing the SQL code:
 
 tables_to_update = [
                     # 3 Fizzy tables
-                    {'oracle_table': 'SA_UNITS',
-                     'company': 'TVH',
-                     'hierarchy': 12,  # 'hierarchy' -> denotes the order in which SA_to_GD jobs are run
-                     'server': 'TVHA-UH-DB03',
-                     'on_prem_database': 'Fizzy',
-                     'col_to_increment': 'B_LOADID',
-                     'sql_statement': """SELECT 'Units' AS B_CLASSNAME,
-                                                b.buildingRef_ AS F_BLOCKS ,
-
-                                                u.[Property Code] AS UNITS_ID,
-                                                u.[Property Name] AS PROPERTY_NAME,
-
-                                                u.[Full Address] AS SHORT_ADDRESS,
-                                                u.[Property Number] AS GEOADDRESS1, u.[Address Line1] AS GEOADDRESS2, u.[Address Line2] AS GEOADDRESS3,
-                                                u.Street AS GEOTOWN, u.Postcode AS GEOPOSTCODE,
-
-                                                ISNULL(u.Bedrooms, '') AS NO_OF_BEDROOMS,
-
-                                                case
-                                                when u.[Property Status] like 'Available' then '022'
-                                                when u.[Property Status] like 'Booked' then '022'
-                                                when u.[Property Status] like 'Occupied' then '004'
-                                                when u.[Property Status] like 'On Hold' then '024'
-                                                else '000' end AS OCCUPANCY_STATUS,
-
-
-                                                case when u.Floor = '1' then '004' when u.Floor = '2' then '005' when u.Floor = '3' then '006' when u.Floor = '4' then '007' when u.Floor = '5' then '009'  when u.Floor = '6' then '010' when u.Floor = '7' then '011' when u.Floor = '8' then '012' when u.Floor = '9' then '013' when u.Floor = '10' then '014' when u.Floor = '11' then '015' when u.Floor = '12' then '016' when u.Floor = '13' then '017' when u.Floor = '14' then '018' when u.Floor = '2/3-Mez' then '030' when u.Floor = 'G' then '002' when u.Floor = 'Ground' then '002' else '000' end AS FLOOR_LEVEL,
-
-                                                u.Comments AS ANY_OTHER_INFORMATION,
-                                                '3' AS F_DATA_OWNERSHIP,
-                                                '3' AS F_SOURCE_SYSTEM,
-
-                                                hashbytes('SHA1', ISNULL(b.buildingRef_,'NA') + ISNULL(u.[Property Code], 'NA') + ISNULL(u.[Property Name], 'NA') + ISNULL(u.[Full Address], 'NA') + ISNULL(u.[Property Number], 'NA') + ISNULL(u.[Address Line1], 'NA') + ISNULL(u.[Address Line2], 'NA') + ISNULL(u.Street, 'NA') + ISNULL(u.Postcode, 'NA') + ISNULL(u.Comments, 'NA')) AS HASH_VALUE
-
-                                        FROM pexPropertyIndex u
-                                            inner join Building b on u.Building =b.name_
-                                            inner join Area a on b.area_ = a.ID""",
-                     'primary_key': 'UNITS_ID',
-                     'delete_last': False
-                    },
-
-                     {'oracle_table': 'SA_BLOCKS',
-                      'company': 'TVH',
-                      'hierarchy': 11,
-                     'server': 'TVHA-UH-DB03',
-                     'on_prem_database': 'Fizzy',
-                     'col_to_increment': 'B_LOADID',
-                     'sql_statement': """SELECT 'Blocks' AS B_CLASSNAME,
-                                               b.buildingRef_ AS BLOCKS_ID,
-                                               b.name_ AS BLOCK_NAME,
-                                               a.code_ AS F_SCHEMES,
-                                               ad.line1_ AS GEOADDRESS1,
-                                               ad.line2_ AS GEOADDRESS2,
-                                               ad.line3_ AS GEOTOWN,
-                                               ad.postcode_ AS GEOPOSTCODE,
-                                               '3' AS F_SOURCE_SYSTEM,
-                                               '3' AS F_DATA_OWNERSHIP
-
-                                               ,CHECKSUM(b.buildingRef_, b.name_, a.code_, ad.line1_, ad.line2_, ad.line3_, ad.postcode_) AS HASH_VALUE
-                                        FROM Building b
-                                        inner join Area a on b.area_ = a.ID
-                                        left join Address ad on b.address_ = ad.ID""",
-                     'primary_key': 'BLOCKS_ID',
-                     'delete_last': False
-                    },
-
-                     {'oracle_table': 'SA_SCHEMES',
-                      'company': 'TVH',
-                      'hierarchy': 9,
-                     'server': 'TVHA-UH-DB03',
-                     'on_prem_database': 'Fizzy',
-                     'col_to_increment': 'B_LOADID',
-                     'sql_statement': """SELECT 'Schemes' AS B_CLASSNAME,
-                                                 a.code_ AS SCHEMES_ID,
-                                                 a.name_ AS SCHEME_NAME,
-                                                 'FIZ_EST_001' AS F_ESTATES,
-                                                 '3' AS F_SOURCE_SYSTEM,
-                                                 '3' AS F_DATA_OWNERSHIP,
-
-                                                 CHECKSUM(a.code_, a.name_) AS HASH_VALUE
-                                          FROM  Area a""",
-                     'primary_key': 'SCHEMES_ID',
-                     'delete_last': False
-                     },
-
-                   # 1 SA_ESTATE_INSP_AND_CLEANING table # changed 05-Sep-2018
-                   {'oracle_table': 'SA_ESTATE_INSP_AND_CLEANING',
-                    'company': 'TVH',
-                    'hierarchy': 10,
-                    'server': 'tvha-uh-ssrs',
-                    'on_prem_database': 'MyTVH',
-                    'col_to_increment': 'B_LOADID',
-                    'sql_statement': """SELECT row_number() OVER (ORDER BY [prop_ref]) AS ESTATE_INSP_AND_CLEANING_
-                                            ,ISNULL( rtrim([prop_ref]), '') AS FD_SCHEMES
-                                            ,ISNULL( rtrim([resident_inspector]), '')  AS RESIDENT_INSPECTOR
-                                            ,ISNULL( rtrim([inspection_priority]), '') AS PRIORITY
-                                            ,ISNULL( rtrim(iif ([grounds_contractor] like 'Just Ask', 1, 21)), '') AS FD_CONTRACTOR_INSP
-                                            ,ISNULL( rtrim(iif([grounds_team] like '',null,[grounds_team])), '') AS GROUNDS_TEAM
-                                            ,ISNULL( rtrim(iif ([cleaning_contractor] like 'Cleanscapes', 4, 21)), '') AS FD_CONTRACTOR_CLEANING
-                                            ,ISNULL( rtrim(iif([cleaning_team] = '', null ,[cleaning_team])), '') AS CLEANING_TEAM
-                                            ,ISNULL( rtrim([staff_grounds_cnt]), '') AS STAFF_GROUNDS_COUNT
-                                            ,ISNULL( convert(Date,rtrim([staff_grounds_last_date])), '') AS STAFF_GROUNDS_LASTDATE
-                                            ,ISNULL( rtrim([staff_cleaning_cnt]), '') AS STAFF_CLEANING_COUNT
-                                            ,ISNULL( convert(Date,rtrim([staff_cleaning_last_date])), '') AS LAST_CLEANING_DATE
-                                            ,ISNULL( rtrim([grounds_status]), '') AS GROUND_STATUS
-                                            ,ISNULL( convert(Date,rtrim([grounds_due])), '') AS GROUNDS_DUE
-                                            ,ISNULL( rtrim([cleaning_status]), '') AS CLEANING_STATUS
-                                            ,ISNULL( convert(Date,rtrim([cleaning_due])), '') AS CLEANING_DUE
-                                            ,ISNULL( rtrim([resident_grounds_cnt]), '') AS RESIDENTS_COUNT
-                                            ,ISNULL( convert(Date,rtrim([resident_grounds_last_date])), '') AS RESIDENT_GROUNDS_LAST_DAT
-                                            ,ISNULL( rtrim([resident_cleaning_cnt]), '') AS RESIDENTS_CLEANING_COUNT
-                                            ,ISNULL( convert(Date,rtrim([resident_cleaning_last_date])), '') AS RESIDENT_CLEAN_LAST_DATE
-
-                                            ,'EstateInspAndCleaning' AS B_CLASSNAME
-                                            ,checksum([prop_ref],[resident_inspector],[inspection_priority],[grounds_contractor],[grounds_team],[cleaning_contractor],[cleaning_team],[staff_grounds_cnt],[staff_grounds_last_date],[staff_cleaning_cnt],[staff_cleaning_last_date],[grounds_status],[grounds_due],[cleaning_status],[cleaning_due],[resident_grounds_cnt] ,[resident_grounds_last_date],[resident_cleaning_cnt],[resident_cleaning_last_date]) AS HASH_VALUE
-                                            ,GETDATE() AS B_CREDATE
-                                            ,'UH_SSRS_MyTvh Integration' AS B_CREATOR
-                                      FROM u_vw_clearview_feedback_estate_inspections_scheme""",
-                    'primary_key': 'ESTATE_INSP_AND_CLEANING_',
-                    'delete_last': False
-                   },
+                   #  {'oracle_table': 'SA_UNITS',
+                   #   'company': 'TVH',
+                   #   'hierarchy': 12,  # 'hierarchy' -> denotes the order in which SA_to_GD jobs are run
+                   #   'server': 'TVHA-UH-DB03',
+                   #   'on_prem_database': 'Fizzy',
+                   #   'col_to_increment': 'B_LOADID',
+                   #   'sql_statement': """SELECT 'Units' AS B_CLASSNAME,
+                   #                              b.buildingRef_ AS F_BLOCKS ,
+                   #
+                   #                              u.[Property Code] AS UNITS_ID,
+                   #                              u.[Property Name] AS PROPERTY_NAME,
+                   #
+                   #                              u.[Full Address] AS SHORT_ADDRESS,
+                   #                              u.[Property Number] AS GEOADDRESS1, u.[Address Line1] AS GEOADDRESS2, u.[Address Line2] AS GEOADDRESS3,
+                   #                              u.Street AS GEOTOWN, u.Postcode AS GEOPOSTCODE,
+                   #
+                   #                              ISNULL(u.Bedrooms, '') AS NO_OF_BEDROOMS,
+                   #
+                   #                              case
+                   #                              when u.[Property Status] like 'Available' then '022'
+                   #                              when u.[Property Status] like 'Booked' then '022'
+                   #                              when u.[Property Status] like 'Occupied' then '004'
+                   #                              when u.[Property Status] like 'On Hold' then '024'
+                   #                              else '000' end AS OCCUPANCY_STATUS,
+                   #
+                   #
+                   #                              case when u.Floor = '1' then '004' when u.Floor = '2' then '005' when u.Floor = '3' then '006' when u.Floor = '4' then '007' when u.Floor = '5' then '009'  when u.Floor = '6' then '010' when u.Floor = '7' then '011' when u.Floor = '8' then '012' when u.Floor = '9' then '013' when u.Floor = '10' then '014' when u.Floor = '11' then '015' when u.Floor = '12' then '016' when u.Floor = '13' then '017' when u.Floor = '14' then '018' when u.Floor = '2/3-Mez' then '030' when u.Floor = 'G' then '002' when u.Floor = 'Ground' then '002' else '000' end AS FLOOR_LEVEL,
+                   #
+                   #                              u.Comments AS ANY_OTHER_INFORMATION,
+                   #                              '3' AS F_DATA_OWNERSHIP,
+                   #                              '3' AS F_SOURCE_SYSTEM,
+                   #
+                   #                              hashbytes('SHA1', ISNULL(b.buildingRef_,'NA') + ISNULL(u.[Property Code], 'NA') + ISNULL(u.[Property Name], 'NA') + ISNULL(u.[Full Address], 'NA') + ISNULL(u.[Property Number], 'NA') + ISNULL(u.[Address Line1], 'NA') + ISNULL(u.[Address Line2], 'NA') + ISNULL(u.Street, 'NA') + ISNULL(u.Postcode, 'NA') + ISNULL(u.Comments, 'NA')) AS HASH_VALUE
+                   #
+                   #                      FROM pexPropertyIndex u
+                   #                          inner join Building b on u.Building =b.name_
+                   #                          inner join Area a on b.area_ = a.ID""",
+                   #   'primary_key': 'UNITS_ID',
+                   #   'delete_last': False
+                   #  },
+                   #
+                   #   {'oracle_table': 'SA_BLOCKS',
+                   #    'company': 'TVH',
+                   #    'hierarchy': 11,
+                   #   'server': 'TVHA-UH-DB03',
+                   #   'on_prem_database': 'Fizzy',
+                   #   'col_to_increment': 'B_LOADID',
+                   #   'sql_statement': """SELECT 'Blocks' AS B_CLASSNAME,
+                   #                             b.buildingRef_ AS BLOCKS_ID,
+                   #                             b.name_ AS BLOCK_NAME,
+                   #                             a.code_ AS F_SCHEMES,
+                   #                             ad.line1_ AS GEOADDRESS1,
+                   #                             ad.line2_ AS GEOADDRESS2,
+                   #                             ad.line3_ AS GEOTOWN,
+                   #                             ad.postcode_ AS GEOPOSTCODE,
+                   #                             '3' AS F_SOURCE_SYSTEM,
+                   #                             '3' AS F_DATA_OWNERSHIP
+                   #
+                   #                             ,CHECKSUM(b.buildingRef_, b.name_, a.code_, ad.line1_, ad.line2_, ad.line3_, ad.postcode_) AS HASH_VALUE
+                   #                      FROM Building b
+                   #                      inner join Area a on b.area_ = a.ID
+                   #                      left join Address ad on b.address_ = ad.ID""",
+                   #   'primary_key': 'BLOCKS_ID',
+                   #   'delete_last': False
+                   #  },
+                   #
+                   #   {'oracle_table': 'SA_SCHEMES',
+                   #    'company': 'TVH',
+                   #    'hierarchy': 9,
+                   #   'server': 'TVHA-UH-DB03',
+                   #   'on_prem_database': 'Fizzy',
+                   #   'col_to_increment': 'B_LOADID',
+                   #   'sql_statement': """SELECT 'Schemes' AS B_CLASSNAME,
+                   #                               a.code_ AS SCHEMES_ID,
+                   #                               a.name_ AS SCHEME_NAME,
+                   #                               'FIZ_EST_001' AS F_ESTATES,
+                   #                               '3' AS F_SOURCE_SYSTEM,
+                   #                               '3' AS F_DATA_OWNERSHIP,
+                   #
+                   #                               CHECKSUM(a.code_, a.name_) AS HASH_VALUE
+                   #                        FROM  Area a""",
+                   #   'primary_key': 'SCHEMES_ID',
+                   #   'delete_last': False
+                   #   },
+                   #
+                   # # 1 SA_ESTATE_INSP_AND_CLEANING table # changed 05-Sep-2018
+                   # {'oracle_table': 'SA_ESTATE_INSP_AND_CLEANING',
+                   #  'company': 'TVH',
+                   #  'hierarchy': 10,
+                   #  'server': 'tvha-uh-ssrs',
+                   #  'on_prem_database': 'MyTVH',
+                   #  'col_to_increment': 'B_LOADID',
+                   #  'sql_statement': """SELECT row_number() OVER (ORDER BY [prop_ref]) AS ESTATE_INSP_AND_CLEANING_
+                   #                          ,ISNULL( rtrim([prop_ref]), '') AS FD_SCHEMES
+                   #                          ,ISNULL( rtrim([resident_inspector]), '')  AS RESIDENT_INSPECTOR
+                   #                          ,ISNULL( rtrim([inspection_priority]), '') AS PRIORITY
+                   #                          ,ISNULL( rtrim(iif ([grounds_contractor] like 'Just Ask', 1, 21)), '') AS FD_CONTRACTOR_INSP
+                   #                          ,ISNULL( rtrim(iif([grounds_team] like '',null,[grounds_team])), '') AS GROUNDS_TEAM
+                   #                          ,ISNULL( rtrim(iif ([cleaning_contractor] like 'Cleanscapes', 4, 21)), '') AS FD_CONTRACTOR_CLEANING
+                   #                          ,ISNULL( rtrim(iif([cleaning_team] = '', null ,[cleaning_team])), '') AS CLEANING_TEAM
+                   #                          ,ISNULL( rtrim([staff_grounds_cnt]), '') AS STAFF_GROUNDS_COUNT
+                   #                          ,ISNULL( convert(Date,rtrim([staff_grounds_last_date])), '') AS STAFF_GROUNDS_LASTDATE
+                   #                          ,ISNULL( rtrim([staff_cleaning_cnt]), '') AS STAFF_CLEANING_COUNT
+                   #                          ,ISNULL( convert(Date,rtrim([staff_cleaning_last_date])), '') AS LAST_CLEANING_DATE
+                   #                          ,ISNULL( rtrim([grounds_status]), '') AS GROUND_STATUS
+                   #                          ,ISNULL( convert(Date,rtrim([grounds_due])), '') AS GROUNDS_DUE
+                   #                          ,ISNULL( rtrim([cleaning_status]), '') AS CLEANING_STATUS
+                   #                          ,ISNULL( convert(Date,rtrim([cleaning_due])), '') AS CLEANING_DUE
+                   #                          ,ISNULL( rtrim([resident_grounds_cnt]), '') AS RESIDENTS_COUNT
+                   #                          ,ISNULL( convert(Date,rtrim([resident_grounds_last_date])), '') AS RESIDENT_GROUNDS_LAST_DAT
+                   #                          ,ISNULL( rtrim([resident_cleaning_cnt]), '') AS RESIDENTS_CLEANING_COUNT
+                   #                          ,ISNULL( convert(Date,rtrim([resident_cleaning_last_date])), '') AS RESIDENT_CLEAN_LAST_DATE
+                   #
+                   #                          ,'EstateInspAndCleaning' AS B_CLASSNAME
+                   #                          ,checksum([prop_ref],[resident_inspector],[inspection_priority],[grounds_contractor],[grounds_team],[cleaning_contractor],[cleaning_team],[staff_grounds_cnt],[staff_grounds_last_date],[staff_cleaning_cnt],[staff_cleaning_last_date],[grounds_status],[grounds_due],[cleaning_status],[cleaning_due],[resident_grounds_cnt] ,[resident_grounds_last_date],[resident_cleaning_cnt],[resident_cleaning_last_date]) AS HASH_VALUE
+                   #                          ,GETDATE() AS B_CREDATE
+                   #                          ,'UH_SSRS_MyTvh Integration' AS B_CREATOR
+                   #                    FROM u_vw_clearview_feedback_estate_inspections_scheme""",
+                   #  'primary_key': 'ESTATE_INSP_AND_CLEANING_',
+                   #  'delete_last': False
+                   # },
 
                 # 3 KEYSTONE tables
                 {'oracle_table': 'SA_ATTRIBUTE_KEY_LOOKUP',  # changed 05-Sep-2017
