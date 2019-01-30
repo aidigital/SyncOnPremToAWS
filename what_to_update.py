@@ -655,7 +655,7 @@ tables_to_update = [
 
                   {'oracle_table': 'SA_SUB_BLOCKS',
                    'company': 'MTH Test',
-                   'hierarchy': 109,
+                   'hierarchy': 108,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST2',
                   'col_to_increment': 'B_LOADID',
@@ -677,7 +677,7 @@ tables_to_update = [
 
                   {'oracle_table': 'SA_UNITS',
                    'company': 'MTH Test',
-                   'hierarchy': 108,
+                   'hierarchy': 109,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST2',
                   'col_to_increment': 'B_LOADID',
@@ -685,6 +685,18 @@ tables_to_update = [
                   'primary_key': 'UNITS_ID',
                   'delete_last': False
                   },
+
+                  # 30-Jan-2019
+                  {'oracle_table': 'SA_RESIDENTS',
+                   'company': 'MTH Test',
+                   'hierarchy': 110,
+                   'server': 'MET-PRD-VM-DB02',
+                   'on_prem_database': 'HOUTEST2',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_residents',
+                   'primary_key': 'RESIDENTS_ID',
+                   'delete_last': False
+                   },
 
                 # ================================== MTH Tables LIVE ================================== #
                   {'oracle_table': 'SA_BLOCKS',
@@ -755,7 +767,7 @@ tables_to_update = [
 
                   {'oracle_table': 'SA_SUB_BLOCKS',
                    'company': 'MTH Live',
-                   'hierarchy': 209,
+                   'hierarchy': 208,
                    'server': 'MET-PRD-VM-DB01',
                    'on_prem_database': 'HOULIVE',
                    'col_to_increment': 'B_LOADID',
@@ -777,7 +789,7 @@ tables_to_update = [
 
                   {'oracle_table': 'SA_UNITS',
                    'company': 'MTH Live',
-                   'hierarchy': 208,
+                   'hierarchy': 209,
                    'server': 'MET-PRD-VM-DB01',
                    'on_prem_database': 'HOULIVE',
                    'col_to_increment': 'B_LOADID',
@@ -785,6 +797,7 @@ tables_to_update = [
                    'primary_key': 'UNITS_ID',
                    'delete_last': False
                    },
+
               ]
 
 

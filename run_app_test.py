@@ -9,7 +9,7 @@ from UDFs import set_logging
 
 if __name__ == "__main__":
     ENVIRONMENT = 'Dev'   # the only possible values are: 'Dev' / 'Prod'
-    RUN_FOR = ['TVH', 'MTH Live']  # the only possible values are: 'TVH' / 'MTH Test' / 'MTH Live' ; the TVH On-Prem VM can only connect to 'TVH'
+    RUN_FOR = ['TVH']  # the only possible values are: 'TVH' / 'MTH Test' / 'MTH Live' ; the TVH On-Prem VM can only connect to 'TVH'
 
     set_logging(environment=ENVIRONMENT, file_name_time=True)  # just provide the path_to_logs if you want to save them somewhere else
 
