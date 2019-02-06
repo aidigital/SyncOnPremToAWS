@@ -686,18 +686,6 @@ tables_to_update = [
                   'delete_last': False
                   },
 
-                  # 30-Jan-2019
-                  {'oracle_table': 'SA_RESIDENTS',
-                   'company': 'MTH Test',
-                   'hierarchy': 110,
-                   'server': 'MET-PRD-VM-DB02',
-                   'on_prem_database': 'HOUTEST2',
-                   'col_to_increment': 'B_LOADID',
-                   'sql_statement': 'SELECT * FROM semarchy_residents',
-                   'primary_key': 'RESIDENTS_ID',
-                   'delete_last': False
-                   },
-
 
                 # ================================== MTH Tables LIVE ================================== #
                   {'oracle_table': 'SA_BLOCKS',
@@ -796,6 +784,18 @@ tables_to_update = [
                    'col_to_increment': 'B_LOADID',
                    'sql_statement': 'SELECT * FROM semarchy_units',
                    'primary_key': 'UNITS_ID',
+                   'delete_last': False
+                   },
+
+                   # 06-Feb-2019
+                  {'oracle_table': 'SA_RESIDENTS',
+                   'company': 'MTH Live',
+                   'hierarchy': 210,
+                   'server': 'MET-PRD-VM-DB01',
+                   'on_prem_database': 'HOULIVE',
+                   'col_to_increment': 'B_LOADID',
+                   'sql_statement': 'SELECT * FROM semarchy_residents',
+                   'primary_key': 'RESIDENTS_ID',
                    'delete_last': False
                    },
 

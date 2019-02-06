@@ -117,7 +117,9 @@ if __name__ == "__main__":
     #      df: DataFrame = onPremise.fetch_to_pandas(sql_statement='SELECT * FROM {}'.format(view))
     #      print(f'{view}: {df.shape[0]} rows | {df.shape[1]} columns: {df.columns.values}\n')
 
-    df: DataFrame = onPremise.fetch_to_pandas(sql_statement='select name, created from v$database@HOUTEST')
+    #df: DataFrame = onPremise.fetch_to_pandas(sql_statement='select name, created from v$database@HOUTEST')  # proof we can run from HOULIVE queries against HOUTEST db
+    df: DataFrame = onPremise.fetch_to_pandas(sql_statement='SELECT * FROM semarchy_residents')
+    print(f' {df.shape[0]} rows | {df.shape[1]} columns: {df.columns.values}\n')
     print(df)
 
     #print('successful connection to On-Prem')
