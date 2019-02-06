@@ -74,6 +74,7 @@ class OnPremise_Connecter2():
         #df.fillna(0)
         #print(df)
         # df.to_csv('C:/Users/adrian_iordache/Desktop/dataDump.csv')
+        #print(df)
         return df
 
     def get_columns_deprecated(self, table: str) -> List[str]:
@@ -106,16 +107,18 @@ if __name__ == "__main__":
     onPremise = OnPremise_Connecter2(server=config['servers']['MET-PRD-VM-DB01'], database=config['On-Premise-MTH-Live']['db'], company='MTH Live')
     #x = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) from tvh_sa_communication_test')
 
-    VIEWS = ['semarchy_blocks', 'semarchy_local_authority', 'semarchy_lookup', 'semarchy_patch_lookup',
-             'semarchy_scheme', 'semarchy_staff', 'semarchy_subblocks', 'semarchy_tenure_types', 'semarchy_units']
+    # VIEWS = ['semarchy_blocks', 'semarchy_local_authority', 'semarchy_lookup', 'semarchy_patch_lookup',
+    #          'semarchy_scheme', 'semarchy_staff', 'semarchy_subblocks', 'semarchy_tenure_types', 'semarchy_units']
+    #
+    # for view in VIEWS:
+    #      #result = onPremise.fetch_to_pandas(sql_statement = 'SELECT count(*) FROM semarchy_blocks FETCH FIRST 10 ROWS ONLY')
+    #      # df: DataFrame = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) FROM {}'.format(view))
+    #      # print('{} -> {} {}'.format(view, df.iloc[0,0], df.columns.values))  # df.iloc[0,0] = value in column 1, row 1
+    #      df: DataFrame = onPremise.fetch_to_pandas(sql_statement='SELECT * FROM {}'.format(view))
+    #      print(f'{view}: {df.shape[0]} rows | {df.shape[1]} columns: {df.columns.values}\n')
 
-    for view in VIEWS:
-         #result = onPremise.fetch_to_pandas(sql_statement = 'SELECT count(*) FROM semarchy_blocks FETCH FIRST 10 ROWS ONLY')
-         # df: DataFrame = onPremise.fetch_to_pandas(sql_statement='SELECT count(*) FROM {}'.format(view))
-         # print('{} -> {} {}'.format(view, df.iloc[0,0], df.columns.values))  # df.iloc[0,0] = value in column 1, row 1
-         df: DataFrame = onPremise.fetch_to_pandas(sql_statement='SELECT * FROM {}'.format(view))
-         print(f'{view}: {df.shape[0]} rows | {df.shape[1]} columns: {df.columns.values}\n')
-
+    df: DataFrame = onPremise.fetch_to_pandas(sql_statement='select name, created from v$database@HOUTEST')
+    print(df)
 
     #print('successful connection to On-Prem')
 

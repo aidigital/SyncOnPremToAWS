@@ -698,6 +698,7 @@ tables_to_update = [
                    'delete_last': False
                    },
 
+
                 # ================================== MTH Tables LIVE ================================== #
                   {'oracle_table': 'SA_BLOCKS',
                    'company': 'MTH Live',
