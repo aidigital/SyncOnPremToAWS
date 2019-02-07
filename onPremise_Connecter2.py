@@ -118,9 +118,40 @@ if __name__ == "__main__":
     #      print(f'{view}: {df.shape[0]} rows | {df.shape[1]} columns: {df.columns.values}\n')
 
     #df: DataFrame = onPremise.fetch_to_pandas(sql_statement='select name, created from v$database@HOUTEST')  # proof we can run from HOULIVE queries against HOUTEST db
-    df: DataFrame = onPremise.fetch_to_pandas(sql_statement='SELECT * FROM semarchy_residents')
+    #df: DataFrame = onPremise.fetch_to_pandas(sql_statement='SELECT * FROM semarchy_residents')  # this also works: "select * from semarchy_residents@HOUTEST"
+    #print(f' {df.shape[0]} rows | {df.shape[1]} columns: {df.columns.values}\n')
+    #print(df)
+
+    verbose_script: str = """select HOUSE_SIZE, 
+                                    RESIDENTS_ID, 
+                                    HOUSE_REF, 
+                                    AGREEMENT_REF, 
+                                    AGREEMENT_DESC, 
+                                    to_date(START_OF_TERM,'DD-MON-RRRR HH:MI:SS') START_OF_TERM, 
+                                    to_date(END_OF_TERM,'DD-MON-RRRR HH:MI:SS') END_OF_TERM, 
+                                    CURRENT_OCCUPANT, 
+                                    STOCK_GROUP, 
+                                    OCCUPANCY_TERMINATED, 
+                                    RENT_VALUE, 
+                                    OCCUPANCY_STATUS, 
+                                    CURRENT_BALANCE, 
+                                    SCH_VALUE, 
+                                    RESIDENT_TYPE, 
+                                    F_RENT_GRP_REF, 
+                                    F_UNITS, 
+                                    F_PROPERTY_TYPE, 
+                                    F_TENURE_TYPE, 
+                                    B_CLASSNAME, 
+                                    to_date(B_CREDATE,'DD-MON-RRRR HH:MI:SS') B_CREDATE, 
+                                    B_CREATOR, 
+                                    F_SOURCE_SYSTEM, 
+                                    F_DATA_OWNERSHIP, 
+                                    HASH_VALUE
+                                    from semarchy_residents
+                                    """
+    df: DataFrame = onPremise.fetch_to_pandas(sql_statement=verbose_script)
     print(f' {df.shape[0]} rows | {df.shape[1]} columns: {df.columns.values}\n')
-    print(df)
+
 
     #print('successful connection to On-Prem')
 
