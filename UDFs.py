@@ -124,6 +124,31 @@ if __name__ == "__main__":
                         dateadd(month,100,getdate()) AS VALID_TO 
             FROM (...)"""
 
-    old_script: str = 'SELECT * FROM my_table'
+    old_script: str = """SELECT HOUSE_SIZE, 
+                                              RESIDENTS_ID, 
+                                              HOUSE_REF, 
+                                              AGREEMENT_REF, 
+                                              AGREEMENT_DESC, 
+                                              to_date(START_OF_TERM,'DD-MON-RRRR HH:MI:SS') START_OF_TERM, 
+                                              to_date(END_OF_TERM,'DD-MON-RRRR HH:MI:SS') END_OF_TERM, 
+                                              CURRENT_OCCUPANT, 
+                                              STOCK_GROUP, 
+                                              OCCUPANCY_TERMINATED, 
+                                              RENT_VALUE, 
+                                              OCCUPANCY_STATUS, 
+                                              CURRENT_BALANCE, 
+                                              SCH_VALUE, 
+                                              RESIDENT_TYPE, 
+                                              F_RENT_GRP_REF, 
+                                              F_UNITS, 
+                                              F_PROPERTY_TYPE, 
+                                              F_TENURE_TYPE, 
+                                              b_classname, 
+                                              to_date(B_CREDATE,'DD-MON-RRRR HH:MI:SS') B_CREDATE, 
+                                              B_CREATOR, 
+                                              F_SOURCE_SYSTEM, 
+                                              F_DATA_OWNERSHIP, 
+                                              hash_value
+                                          FROM semarchy_residents"""
     new_script: str = modify_script(old_script=old_script, modification=' 1099 AS dbo.B_LOADID')
     print(new_script)
