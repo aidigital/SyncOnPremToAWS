@@ -276,10 +276,8 @@ class AWS_Connecter():
                            ,column_number=self.make_string(nr_cols))  # /*+ PARALLEL({table}) */
         # `make_string` fct will create something like: :0, :1, :2 ... -> those are the column names of `insert_this`
         #print('sql_statement = ', sql_statement)
-        # print('query = ', query)
 
-
-        print(f'THE INSERT QUERY for {oracle_table}: ', query)
+        #print(f'THE INSERT QUERY for {oracle_table}: ', query)
         self.cursor.executemany(query, insert_this)
         self.connection.commit()
 

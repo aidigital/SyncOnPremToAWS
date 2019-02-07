@@ -7,6 +7,7 @@ Rules for writing the SQL code:
  3. if [column_name] has NULL in it, use: ISNULL([column_name], '') AS ORACLE_COLUMN_NAME
  4. Each sql_statement needs to have a column called HASH_VALUE (otherwise the code fails)
  5. The word "DISTINCT" needs to be in capitals
+ 6. The syntax we HAVE TO use is in the 'sql_statement' is: "SELECT column1 AS column1, column2 AS column2 FROM ...". We cannot simply write: "SELECT column 1, column2 FROM ..."
 """
 
 tables_to_update = [
