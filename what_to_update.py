@@ -794,7 +794,7 @@ tables_to_update = [
                    'server': 'MET-PRD-VM-DB01',
                    'on_prem_database': 'HOULIVE',
                    'col_to_increment': 'B_LOADID',
-                   'sql_statement': """SELECT HOUSE_SIZE, 
+                   'sql_statement': """SELECT HOUSE_SIZE AS HOUSE_SIZE, 
                                               RESIDENTS_ID AS RESIDENTS_ID, 
                                               HOUSE_REF AS HOUSE_REF, 
                                               AGREEMENT_REF AS AGREEMENT_REF, 
