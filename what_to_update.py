@@ -813,12 +813,12 @@ tables_to_update = [
                                               F_UNITS AS F_UNITS, 
                                               F_PROPERTY_TYPE AS F_PROPERTY_TYPE, 
                                               F_TENURE_TYPE F_TENURE_TYPE, 
-                                              b_classname AS b_classname, 
+                                              b_classname AS B_CLASSNAME, 
                                               to_date(B_CREDATE,'DD-MON-RRRR HH:MI:SS') AS B_CREDATE, 
                                               B_CREATOR AS B_CREATOR, 
                                               F_SOURCE_SYSTEM AS F_SOURCE_SYSTEM, 
                                               F_DATA_OWNERSHIP AS F_DATA_OWNERSHIP, 
-                                              hash_value AS hash_value
+                                              hash_value AS HASH_VALUE
                                           FROM semarchy_residents""",
                    'primary_key': 'RESIDENTS_ID',
                    'delete_last': False
