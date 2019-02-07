@@ -122,6 +122,7 @@ if __name__ == "__main__":
     #print(f' {df.shape[0]} rows | {df.shape[1]} columns: {df.columns.values}\n')
     #print(df)
 
+    # trying to use the 'to_date()' function for date conversion
     verbose_script: str = """select HOUSE_SIZE, 
                                     RESIDENTS_ID, 
                                     HOUSE_REF, 
