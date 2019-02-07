@@ -125,30 +125,32 @@ if __name__ == "__main__":
             FROM (...)"""
 
     old_script: str = """SELECT HOUSE_SIZE, 
-                                              RESIDENTS_ID, 
-                                              HOUSE_REF, 
-                                              AGREEMENT_REF, 
-                                              AGREEMENT_DESC, 
-                                              to_date(START_OF_TERM,'DD-MON-RRRR HH:MI:SS') START_OF_TERM, 
-                                              to_date(END_OF_TERM,'DD-MON-RRRR HH:MI:SS') END_OF_TERM, 
-                                              CURRENT_OCCUPANT, 
-                                              STOCK_GROUP, 
-                                              OCCUPANCY_TERMINATED, 
-                                              RENT_VALUE, 
-                                              OCCUPANCY_STATUS, 
-                                              CURRENT_BALANCE, 
-                                              SCH_VALUE, 
-                                              RESIDENT_TYPE, 
-                                              F_RENT_GRP_REF, 
-                                              F_UNITS, 
-                                              F_PROPERTY_TYPE, 
-                                              F_TENURE_TYPE, 
-                                              b_classname, 
-                                              to_date(B_CREDATE,'DD-MON-RRRR HH:MI:SS') B_CREDATE, 
-                                              B_CREATOR, 
-                                              F_SOURCE_SYSTEM, 
-                                              F_DATA_OWNERSHIP, 
-                                              hash_value
+                                              RESIDENTS_ID AS RESIDENTS_ID, 
+                                              HOUSE_REF AS HOUSE_REF, 
+                                              AGREEMENT_REF AS AGREEMENT_REF, 
+                                              AGREEMENT_DESC AS AGREEMENT_DESC, 
+                                              to_date(START_OF_TERM,'DD-MON-RRRR HH:MI:SS') AS START_OF_TERM, 
+                                              to_date(END_OF_TERM,'DD-MON-RRRR HH:MI:SS') AS END_OF_TERM, 
+                                              CURRENT_OCCUPANT AS CURRENT_OCCUPANT, 
+                                              STOCK_GROUP AS STOCK_GROUP, 
+                                              OCCUPANCY_TERMINATED AS OCCUPANCY_TERMINATED, 
+                                              RENT_VALUE AS RENT_VALUE, 
+                                              OCCUPANCY_STATUS AS OCCUPANCY_STATUS, 
+                                              CURRENT_BALANCE AS CURRENT_BALANCE, 
+                                              SCH_VALUE AS SCH_VALUE, 
+                                              RESIDENT_TYPE AS RESIDENT_TYPE, 
+                                              F_RENT_GRP_REF AS F_RENT_GRP_REF, 
+                                              F_UNITS AS F_UNITS, 
+                                              F_PROPERTY_TYPE AS F_PROPERTY_TYPE, 
+                                              F_TENURE_TYPE F_TENURE_TYPE, 
+                                              b_classname AS b_classname, 
+                                              to_date(B_CREDATE,'DD-MON-RRRR HH:MI:SS') AS B_CREDATE, 
+                                              B_CREATOR AS B_CREATOR, 
+                                              F_SOURCE_SYSTEM AS F_SOURCE_SYSTEM, 
+                                              F_DATA_OWNERSHIP AS F_DATA_OWNERSHIP, 
+                                              hash_value AS hash_value
                                           FROM semarchy_residents"""
-    new_script: str = modify_script(old_script=old_script, modification=' 1099 AS dbo.B_LOADID')
-    print(new_script)
+    # new_script: str = modify_script(old_script=old_script, modification=' 1099 AS dbo.B_LOADID')
+    # print(new_script)
+    a = all_next_words_after_word(my_string=old_script, after_this_word='AS', split_string_by=',')
+    print(a, type(a))
