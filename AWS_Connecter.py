@@ -155,7 +155,7 @@ class AWS_Connecter():
         query: str = """INSERT INTO {table} VALUES ({columns})""".format(table=oracle_table, columns=self.make_string(nr_cols))
         # `make_string` fct will create something like: :0, :1, :2 ... -> those are the column names of `insert_this`
 
-        print(f'THE INSERT QUERY for {oracle_table}: ', query)
+
         self.cursor.executemany(query, insert_this)
         self.connection.commit()
 
@@ -278,6 +278,8 @@ class AWS_Connecter():
         #print('sql_statement = ', sql_statement)
         # print('query = ', query)
 
+
+        print(f'THE INSERT QUERY for {oracle_table}: ', query)
         self.cursor.executemany(query, insert_this)
         self.connection.commit()
 
