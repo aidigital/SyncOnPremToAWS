@@ -812,7 +812,7 @@ tables_to_update = [
                                               F_RENT_GRP_REF AS F_RENT_GRP_REF, 
                                               F_UNITS AS F_UNITS, 
                                               F_PROPERTY_TYPE AS F_PROPERTY_TYPE, 
-                                              F_TENURE_TYPE F_TENURE_TYPE, 
+                                              F_TENURE_TYPE AS F_TENURE_TYPE, 
                                               b_classname AS B_CLASSNAME, 
                                               to_date(B_CREDATE,'DD-MON-RRRR HH:MI:SS') AS B_CREDATE, 
                                               B_CREATOR AS B_CREATOR, 
