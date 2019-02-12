@@ -196,7 +196,9 @@ where (
        )
 ) X
 """
-    df: DataFrame = onPremise.fetch_to_pandas(sql_statement=verbose_script_2)
+
+    verbose_script_3: str = """select * from hou.wip_semarchy_communication """
+    df: DataFrame = onPremise.fetch_to_pandas(sql_statement=verbose_script_3)
     print(f' {df.shape[0]} rows | {df.shape[1]} columns: {df.columns.values}\n')
     print(df.head)
 
