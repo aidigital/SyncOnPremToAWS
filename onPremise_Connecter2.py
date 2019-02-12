@@ -149,8 +149,56 @@ if __name__ == "__main__":
                                               F_DATA_OWNERSHIP AS F_DATA_OWNERSHIP, 
                                               hash_value AS HASH_VALUE
                                           FROM semarchy_residents"""
-    df: DataFrame = onPremise.fetch_to_pandas(sql_statement=verbose_script)
+    verbose_script_2: str = """select X.*
+/*AA 12.02.2019
+ Test DBs down and time is of the essence
+ Sending SELECT to Adrian and Alice to use on HOULIVE
+ If they approve then submit rfc to create it as a view and
+ ask Adrian and Alice to update their scripts*/
+, standard_hash(VALUE||COMMUNICATION_NAME||DEFAULT_COMMUNICATION||F_PERSON||F_COMMUNICATION_TYPE||OTHER_INFO||COMMUNICATION_ID,'SHA1') hash_value
+from 
+(
+select cde_contact_value VALUE
+,  cde_contact_name COMMUNICATION_NAME
+,  case when cde_precedence='1' then '001'
+        when cde_precedence>1 then '002'
+        else '000' end DEFAULT_COMMUNICATION
+,  par_refno F_PERSON
+,  case when cde_frv_cme_code='TELEPHONE' then 'ZCM-MT1'
+        when cde_frv_cme_code='EMAIL' then 'ZCM-UE1'
+        when cde_frv_cme_code='WORK' then 'ZCM-WT1'
+        when cde_frv_cme_code='HOMETEL' then 'ZCM-T'
+        when cde_frv_cme_code='CONTACTTEL' then 'ZCM-T2'
+        when cde_frv_cme_code='FAX, EBILL,FACEBOOK,TWITTER' then 'ZCM-O'
+        when cde_frv_cme_code='INTERNAT' then 'ZCM-T3'
+        when cde_frv_cme_code='LETTER' then 'ZCM-L' else 'ZCM-O' end F_COMMUNICATION_TYPE
+, null OTHER_INFO        
+, cde_refno COMMUNICATION_ID  /*this is the pk in the Northgate contact_details table*/
+, 'Communication' B_CLASSNAME
+, to_char(sysdate,'YYYY-MM-DD HH:MI:SS') B_CREDATE
+, 'Northgate Integration' B_CREATOR
+,  21 F_DATA_OWNERSHIP
+,  21 F_SOURCE_SYSTEM
+from contact_details
+join parties on par_refno=cde_par_refno
+where (
+       exists (select null 
+              from lease_parties /*Include ended lease parties if there is still a current lease assignment. Note to review with Amy*/
+              join lease_assignments on las_lea_pro_refno=lpt_las_lea_pro_refno
+              where sysdate between las_start_date and nvl(las_end_date,sysdate)
+              and lpt_par_refno=par_refno)
+   OR exists (select null
+              from tenancy_instances /*Include ended tenants if there is still a current tenancy. Note to review with Amy*/
+              join household_persons on hop_refno=tin_hop_refno
+              join tenancies on tcy_refno=tin_tcy_refno
+              where hop_par_refno=par_refno
+              and sysdate between tcy_act_start_date and nvl(tcy_act_end_date,sysdate))
+       )
+) X
+"""
+    df: DataFrame = onPremise.fetch_to_pandas(sql_statement=verbose_script_2)
     print(f' {df.shape[0]} rows | {df.shape[1]} columns: {df.columns.values}\n')
+    print(df.head)
 
     #print('successful connection to On-Prem')
 
