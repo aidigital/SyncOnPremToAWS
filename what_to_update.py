@@ -592,7 +592,7 @@ tables_to_update = [
                    'company': 'MTH Test',
                    'hierarchy': 107,
                    'server': 'MET-PRD-VM-DB02',
-                   'on_prem_database': 'HOUTEST2',
+                   'on_prem_database': 'HOUTEST',
                    'col_to_increment': 'B_LOADID',
                    'sql_statement': 'SELECT * FROM semarchy_blocks',
                    'primary_key': 'BLOCKS_ID',
@@ -603,7 +603,7 @@ tables_to_update = [
                     'company': 'MTH Test',
                     'hierarchy': 104,
                     'server': 'MET-PRD-VM-DB02',
-                    'on_prem_database': 'HOUTEST2',
+                    'on_prem_database': 'HOUTEST',
                     'col_to_increment': 'B_LOADID',
                     'sql_statement': 'SELECT * FROM semarchy_local_authority',
                     'primary_key': 'LOCAL_AUTHORITY_ID',
@@ -614,7 +614,7 @@ tables_to_update = [
                    'company': 'MTH Test',
                    'hierarchy': 101,
                   'server': 'MET-PRD-VM-DB02',
-                  'on_prem_database': 'HOUTEST2',
+                  'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
                   'sql_statement': 'SELECT * FROM semarchy_lookup',
                   'primary_key': 'LOOKUP_ID',
@@ -625,7 +625,7 @@ tables_to_update = [
                    'company': 'MTH Test',
                    'hierarchy': 102,
                   'server': 'MET-PRD-VM-DB02',
-                  'on_prem_database': 'HOUTEST2',
+                  'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
                   'sql_statement': 'SELECT * FROM semarchy_patch_lookup',
                   'primary_key': 'PATCH_LOOKUP_ID',
@@ -636,7 +636,7 @@ tables_to_update = [
                    'company': 'MTH Test',
                    'hierarchy': 106,
                   'server': 'MET-PRD-VM-DB02',
-                  'on_prem_database': 'HOUTEST2',
+                  'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
                   'sql_statement': 'SELECT * FROM semarchy_scheme',
                   'primary_key': 'SCHEMES_ID',
@@ -647,7 +647,7 @@ tables_to_update = [
                    'company': 'MTH Test',
                    'hierarchy': 105,
                   'server': 'MET-PRD-VM-DB02',
-                  'on_prem_database': 'HOUTEST2',
+                  'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
                   'sql_statement': 'SELECT * FROM semarchy_staff',
                   'primary_key': 'STAFF_INVOLVEMENT_ID',
@@ -658,7 +658,7 @@ tables_to_update = [
                    'company': 'MTH Test',
                    'hierarchy': 108,
                   'server': 'MET-PRD-VM-DB02',
-                  'on_prem_database': 'HOUTEST2',
+                  'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
                   'sql_statement': 'SELECT * FROM semarchy_subblocks',
                   'primary_key': 'SUB_BLOCKS_ID',
@@ -669,7 +669,7 @@ tables_to_update = [
                    'company': 'MTH Test',
                    'hierarchy': 103,
                   'server': 'MET-PRD-VM-DB02',
-                  'on_prem_database': 'HOUTEST2',
+                  'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
                   'sql_statement': 'SELECT * FROM semarchy_tenure_types',
                   'primary_key': 'TENURE_TYPE_ID',
@@ -680,12 +680,61 @@ tables_to_update = [
                    'company': 'MTH Test',
                    'hierarchy': 109,
                   'server': 'MET-PRD-VM-DB02',
-                  'on_prem_database': 'HOUTEST2',
+                  'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
                   'sql_statement': 'SELECT * FROM semarchy_units',
                   'primary_key': 'UNITS_ID',
                   'delete_last': False
                   },
+
+ 
+
+                  # 28-Feb-2019
+                  {'oracle_table': 'SA_PERSON',
+                   'company': 'MTH',
+                   'hierarchy': 111,
+                  'server': 'MET-PRD-VM-DB02',
+                  'on_prem_database': 'HOUTEST',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_person',
+                  'primary_key': 'PERSON_ID',
+                  'delete_last': False
+                  },
+
+                  {'oracle_table': 'SA_CONTACT_PREFERENCES',
+                   'company': 'MTH',
+                   'hierarchy': 112,
+                  'server': 'MET-PRD-VM-DB02',
+                  'on_prem_database': 'HOUTEST',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_contact_preferences',
+                  'primary_key': 'CONTACT_PREFERENCES_ID',
+                  'delete_last': False
+                  },
+
+                  {'oracle_table': 'SA_COMMUNICATION',
+                   'company': 'MTH',
+                   'hierarchy': 113,
+                  'server': 'MET-PRD-VM-DB02',
+                  'on_prem_database': 'HOUTEST',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_communication',
+                  'primary_key': 'COMMUNICATION_ID',
+                  'delete_last': False
+                  },
+
+                  {'oracle_table': 'SA_VULNERABILITY_DETAILS',
+                   'company': 'MTH',
+                   'hierarchy': 114,
+                  'server': 'MET-PRD-VM-DB02',
+                  'on_prem_database': 'HOUTEST',
+                  'col_to_increment': 'B_LOADID',
+                  'sql_statement': 'SELECT * FROM semarchy_vulnerability_details',
+                  'primary_key': 'VULNERABILITY_DETAILS_ID',
+                  'delete_last': False
+                  },
+
+
 
 
                 # ================================== MTH Tables LIVE ================================== #
@@ -788,7 +837,6 @@ tables_to_update = [
                    'delete_last': False
                    },
 
-                   # 06-Feb-2019
                   {'oracle_table': 'SA_RESIDENTS',
                    'company': 'MTH Live',
                    'hierarchy': 210,
