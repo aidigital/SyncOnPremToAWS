@@ -687,12 +687,12 @@ tables_to_update = [
                   'delete_last': False
                   },
 
- 
+
 
                   # 28-Feb-2019
                   {'oracle_table': 'SA_PERSON',
-                   'company': 'MTH',
-                   'hierarchy': 111,
+                   'company': 'MTH Test',
+                   'hierarchy': 110,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
@@ -702,8 +702,8 @@ tables_to_update = [
                   },
 
                   {'oracle_table': 'SA_CONTACT_PREFERENCES',
-                   'company': 'MTH',
-                   'hierarchy': 112,
+                   'company': 'MTH Test',
+                   'hierarchy': 111,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
@@ -713,8 +713,8 @@ tables_to_update = [
                   },
 
                   {'oracle_table': 'SA_COMMUNICATION',
-                   'company': 'MTH',
-                   'hierarchy': 113,
+                   'company': 'MTH Test',
+                   'hierarchy': 112,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
@@ -724,8 +724,8 @@ tables_to_update = [
                   },
 
                   {'oracle_table': 'SA_VULNERABILITY_DETAILS',
-                   'company': 'MTH',
-                   'hierarchy': 114,
+                   'company': 'MTH Test',
+                   'hierarchy': 113,
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
@@ -733,9 +733,6 @@ tables_to_update = [
                   'primary_key': 'VULNERABILITY_DETAILS_ID',
                   'delete_last': False
                   },
-
-
-
 
                 # ================================== MTH Tables LIVE ================================== #
                   {'oracle_table': 'SA_BLOCKS',
