@@ -729,7 +729,7 @@ tables_to_update = [
                   'server': 'MET-PRD-VM-DB02',
                   'on_prem_database': 'HOUTEST',
                   'col_to_increment': 'B_LOADID',
-                  'sql_statement': 'SELECT * FROM semarchy_vulnerability_details',
+                  'sql_statement': 'SELECT * FROM semarchy_vulnerability',
                   'primary_key': 'VULNERABILITY_DETAILS_ID',
                   'delete_last': False
                   },
