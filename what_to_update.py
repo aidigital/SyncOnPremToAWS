@@ -740,7 +740,7 @@ tables_to_update = [
                    'server': 'MET-PRD-VM-DB02',
                    'on_prem_database': 'HOUTEST',
                    'col_to_increment': 'B_LOADID',
-                   'sql_statement': """select * from semarchy_residents""",
+                   'sql_statement': 'SELECT * FROM semarchy_residents',
                    'primary_key': 'RESIDENTS_ID',
                    'delete_last': False
                   },
