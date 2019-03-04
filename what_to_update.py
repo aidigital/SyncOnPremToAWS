@@ -700,38 +700,38 @@ tables_to_update = [
                   'delete_last': False
                   },
 
-                  {'oracle_table': 'SA_CONTACT_PREFERENCES',
-                   'company': 'MTH Test',
-                   'hierarchy': 111,
-                  'server': 'MET-PRD-VM-DB01',
-                  'on_prem_database': 'HOULIVE',
-                  'col_to_increment': 'B_LOADID',
-                  'sql_statement': 'SELECT * FROM semarchy_contact_preferences',
-                  'primary_key': 'CONTACT_PREFERENCES_ID',
-                  'delete_last': False
-                  },
-
-                  {'oracle_table': 'SA_COMMUNICATION',
-                   'company': 'MTH Test',
-                   'hierarchy': 112,
-                  'server': 'MET-PRD-VM-DB01',
-                  'on_prem_database': 'HOULIVE',
-                  'col_to_increment': 'B_LOADID',
-                  'sql_statement': 'SELECT * FROM semarchy_communication',
-                  'primary_key': 'COMMUNICATION_ID',
-                  'delete_last': False
-                  },
-
-                  {'oracle_table': 'SA_VULNERABILITY_DETAILS',
-                   'company': 'MTH Test',
-                   'hierarchy': 113,
-                  'server': 'MET-PRD-VM-DB01',
-                  'on_prem_database': 'HOULIVE',
-                  'col_to_increment': 'B_LOADID',
-                  'sql_statement': 'SELECT * FROM semarchy_vulnerability',
-                  'primary_key': 'VULNERABILITY_DETAILS_ID',
-                  'delete_last': False
-                  },
+                  # {'oracle_table': 'SA_CONTACT_PREFERENCES',
+                  #  'company': 'MTH Test',
+                  #  'hierarchy': 111,
+                  # 'server': 'MET-PRD-VM-DB01',
+                  # 'on_prem_database': 'HOULIVE',
+                  # 'col_to_increment': 'B_LOADID',
+                  # 'sql_statement': 'SELECT * FROM semarchy_contact_preferences',
+                  # 'primary_key': 'CONTACT_PREFERENCES_ID',
+                  # 'delete_last': False
+                  # },
+                  #
+                  # {'oracle_table': 'SA_COMMUNICATION',
+                  #  'company': 'MTH Test',
+                  #  'hierarchy': 112,
+                  # 'server': 'MET-PRD-VM-DB01',
+                  # 'on_prem_database': 'HOULIVE',
+                  # 'col_to_increment': 'B_LOADID',
+                  # 'sql_statement': 'SELECT * FROM semarchy_communication',
+                  # 'primary_key': 'COMMUNICATION_ID',
+                  # 'delete_last': False
+                  # },
+                  #
+                  # {'oracle_table': 'SA_VULNERABILITY_DETAILS',
+                  #  'company': 'MTH Test',
+                  #  'hierarchy': 113,
+                  # 'server': 'MET-PRD-VM-DB01',
+                  # 'on_prem_database': 'HOULIVE',
+                  # 'col_to_increment': 'B_LOADID',
+                  # 'sql_statement': 'SELECT * FROM semarchy_vulnerability',
+                  # 'primary_key': 'VULNERABILITY_DETAILS_ID',
+                  # 'delete_last': False
+                  # },
 
                   # 04-Mar-2019
                   {'oracle_table': 'SA_RESIDENTS',
