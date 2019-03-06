@@ -737,7 +737,7 @@ tables_to_update = [
                   {'oracle_table': 'SA_RESIDENTS',
 
                    'company': 'MTH Test',
-                   'hierarchy': 199,
+                   'hierarchy': 1999,
                    'server': 'MET-PRD-VM-DB01',
                    'on_prem_database': 'HOULIVE',
                    'col_to_increment': 'B_LOADID',
