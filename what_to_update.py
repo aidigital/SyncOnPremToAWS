@@ -735,6 +735,7 @@ tables_to_update = [
 
                   # 04-Mar-2019
                   {'oracle_table': 'SA_RESIDENTS',
+
                    'company': 'MTH Test',
                    'hierarchy': 199,
                    'server': 'MET-PRD-VM-DB01',
@@ -744,6 +745,7 @@ tables_to_update = [
                    'primary_key': 'RESIDENTS_ID',
                    'delete_last': False
                   },
+
 
                 # ================================== MTH Tables LIVE ================================== #
                   {'oracle_table': 'SA_BLOCKS',
